@@ -1,5 +1,15 @@
 # Contributing Specification
 
+## Spec-First Development Workflow
+
+This project follows a spec-first development model where specifications drive code generation:
+
+1. **Spec changes come first**: When adding or changing functionality, update the relevant spec files before modifying code. The WHAT section defines the desired behavior; the HOW section defines the technical design.
+2. **AI generates code from specs**: AI reads the updated specs and generates the corresponding implementation. Specs are the authoritative source — code is derived from them.
+3. **Review cycle**: Spec review (are the requirements and design correct?), code generation (does the AI output match the spec?), test verification (`swift build && swift test` pass).
+
+When reviewing contributions, verify that spec changes accompany any behavioral code changes. A code change without a corresponding spec update should be questioned.
+
 ## Conventional Commits
 
 All commits must follow the [Conventional Commits](https://www.conventionalcommits.org/) format:

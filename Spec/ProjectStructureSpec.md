@@ -16,9 +16,10 @@ SwiftChatCompletionsMacros/
 │   │   ├── bug-report.md                 # Bug report template
 │   │   └── feature-request.md            # Feature request template
 │   └── pull_request_template.md          # PR checklist
-├── Spec/
-│   ├── README.md                         # Spec index
-│   ├── SwiftChatCompletionsMacros.md     # Core product spec
+├── Spec/                                    # Source of truth for AI code generation
+│   ├── README.md                         # Spec index and philosophy
+│   ├── SwiftChatCompletionsMacros.md     # Core product spec (WHAT + HOW)
+│   ├── DesignRationale.md                # Design decisions (WHY)
 │   ├── DocumentationSpec.md              # Documentation rules
 │   ├── ContributingSpec.md               # Contribution standards
 │   ├── ProjectStructureSpec.md           # This file

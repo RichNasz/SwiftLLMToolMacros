@@ -57,7 +57,7 @@ The Quick Start code example must:
 
 ### Quality Standard
 
-CLAUDE.md describes WHAT the project is and how it is structured. It should contain enough context for an AI assistant to navigate and modify the codebase effectively. Avoid implementation algorithms — link to source files instead.
+CLAUDE.md is the AI's entry point to the codebase. It should contain enough context for AI to navigate the project, understand the architecture, and generate correct code. It should reference spec files as authoritative sources for detailed design decisions. Implementation context belongs in HOW specs; CLAUDE.md should direct AI to consult `Spec/SwiftChatCompletionsMacros.md` for technical design details.
 
 ## Examples/BasicUsage.swift
 
