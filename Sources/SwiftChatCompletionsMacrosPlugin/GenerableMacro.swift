@@ -293,7 +293,7 @@ private func typeToSchemaExpression(_ typeName: String, description: String? = n
 			let itemSchema = typeToSchemaExpression(elementType)
 			return ".array(items: \(itemSchema))"
 		}
-		// Nested Generable type — delegate to its jsonSchema
+		// Nested ChatCompletionsToolArguments type — delegate to its jsonSchema
 		return "\(typeName).jsonSchema"
 	}
 }

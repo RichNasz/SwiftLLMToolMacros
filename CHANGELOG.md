@@ -13,4 +13,4 @@ All notable changes to this project will be documented in this file.
 - `ToolOutput` and `GuideConstraint` supporting types
 - Support for String, Int, Double, Bool, Optional, Array, and nested types
 - Comprehensive macro expansion and runtime encoding tests
-- GitHub CI workflow for build and test
+
