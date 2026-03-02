@@ -17,12 +17,14 @@ The README must contain these sections in this exact order:
 
 ### Badge Row
 
-Three badges on the first line after the H1 title, in this order:
+Five badges on the first line after the H1 title, in this order:
 
 ```markdown
 [![Swift 6.2](https://img.shields.io/badge/Swift-6.2-orange.svg)](https://swift.org)
+[![Xcode CLI](https://img.shields.io/badge/Xcode%20CLI-16+-blue.svg)](https://developer.apple.com/xcode/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-macOS%2013%20%7C%20iOS%2016-lightgrey.svg)](Package.swift)
+[![Built with Claude Code](https://img.shields.io/badge/Built%20with-Claude%20Code-blueviolet?logo=claude)](https://claude.ai/code)
 ```
 
 Update version numbers when requirements change.
