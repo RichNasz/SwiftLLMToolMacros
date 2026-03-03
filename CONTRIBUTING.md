@@ -76,6 +76,8 @@ docs(docs): update README Quick Start example
 
 ## AI Attribution
 
+This project is human-led by [RichNasz](https://github.com/RichNasz), with [Claude Code](https://claude.ai/code) as the code generation tool. All AI-generated code is reviewed and approved by a human maintainer.
+
 Commits with AI-assisted code must include the following trailer:
 
 ```

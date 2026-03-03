@@ -18,7 +18,8 @@ The README must contain these sections in this exact order:
 10. **Requirements** (H2)
 11. **Contributing** (H2)
 12. **Agent Skill** (H2)
-13. **License** (H2)
+13. **Attribution** (H2)
+14. **License** (H2)
 
 ### Badge Row
 

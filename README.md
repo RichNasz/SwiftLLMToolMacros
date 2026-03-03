@@ -20,6 +20,7 @@ Swift macros that generate OpenAI-compatible JSON Schema at compile time -- zero
 - [Requirements](#requirements)
 - [Contributing](#contributing)
 - [Agent Skill](#agent-skill)
+- [Attribution](#attribution)
 - [License](#license)
 
 ## Overview
@@ -206,6 +207,10 @@ This places the skill in your project's `skills/` directory, where compatible ag
 ### Spec-Driven Development
 
 If you use AI coding agents, you can pair the Agent Skill with WHAT and HOW specs to define tools before generating code. See the [Spec-Driven Development Guide](docs/SpecDrivenDevelopment.md) for the workflow and [`Examples/Specs/`](Examples/Specs/) for sample specs you can use as templates.
+
+## Attribution
+
+SwiftChatCompletionsMacros is created and maintained by [RichNasz](https://github.com/RichNasz). Code is generated with [Claude Code](https://claude.ai/code) by Anthropic. All code is human-reviewed and human-directed.
 
 ## License
 
