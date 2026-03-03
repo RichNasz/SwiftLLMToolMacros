@@ -7,14 +7,18 @@
 The README must contain these sections in this exact order:
 
 1. **Title + Badges** (H1)
-2. **Overview** (H2)
-3. **Quick Start** (H2) — Installation + Basic Usage subsections
-4. **Supported Types** (H2)
-5. **@ChatCompletionsToolGuide Constraints** (H2)
-6. **Requirements** (H2)
-7. **Contributing** (H2)
-8. **Agent Skill** (H2)
-9. **License** (H2)
+2. **Table of Contents** — Links to all H2 sections
+3. **Overview** (H2)
+4. **Quick Start** (H2) — Installation + Basic Usage subsections
+5. **How It Works** (H2)
+6. **Supported Types** (H2)
+7. **@ChatCompletionsToolGuide Constraints** (H2)
+8. **Apple FoundationModels Compatibility** (H2) — Comparison table, links to Apple docs
+9. **Designed for SwiftChatCompletionsDSL** (H2)
+10. **Requirements** (H2)
+11. **Contributing** (H2)
+12. **Agent Skill** (H2)
+13. **License** (H2)
 
 ### Badge Row
 

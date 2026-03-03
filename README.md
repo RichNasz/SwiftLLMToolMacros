@@ -8,6 +8,20 @@
 
 Swift macros that generate OpenAI-compatible JSON Schema at compile time -- zero runtime overhead, zero naming conflicts with Apple FoundationModels, fully type-safe.
 
+## Table of Contents
+
+- [Overview](#overview)
+- [Quick Start](#quick-start)
+- [How It Works](#how-it-works)
+- [Supported Types](#supported-types)
+- [@ChatCompletionsToolGuide Constraints](#chatcompletionstoolguide-constraints)
+- [Apple FoundationModels Compatibility](#apple-foundationmodels-compatibility)
+- [Designed for SwiftChatCompletionsDSL](#designed-for-swiftchatcompletionsdsl)
+- [Requirements](#requirements)
+- [Contributing](#contributing)
+- [Agent Skill](#agent-skill)
+- [License](#license)
+
 ## Overview
 
 SwiftChatCompletionsMacros provides three macros for defining OpenAI-compatible tool definitions at compile time:
@@ -142,11 +156,26 @@ Available constraints:
 - `.minimumCount(Int)` -- Minimum array item count
 - `.maximumCount(Int)` -- Maximum array item count
 
+## Apple FoundationModels Compatibility
+
+Apple's [FoundationModels](https://developer.apple.com/documentation/FoundationModels) framework provides macros for on-device inference: [`@Generable`](https://developer.apple.com/documentation/foundationmodels/generable) for structured output, [`@Guide`](https://developer.apple.com/documentation/foundationmodels/guide(description:)) for property descriptions and constraints, and [`@Tool`](https://developer.apple.com/documentation/foundationmodels/tool) for [tool calling](https://developer.apple.com/documentation/foundationmodels/expanding-generation-with-tool-calling).
+
+SwiftChatCompletionsMacros follows the same macro-driven pattern -- annotate structs, get schema generation at compile time -- but targets **cloud-based APIs** (OpenAI, Anthropic, Mistral, Groq) instead of Apple's on-device model. The two frameworks serve different inference targets but share the same philosophy: define your types once, let the compiler generate the schema.
+
+| | SwiftChatCompletionsMacros | Apple FoundationModels |
+|---|---|---|
+| **Schema macro** | `@ChatCompletionsToolArguments` | [`@Generable`](https://developer.apple.com/documentation/foundationmodels/generable) |
+| **Constraint macro** | `@ChatCompletionsToolGuide` | [`@Guide`](https://developer.apple.com/documentation/foundationmodels/guide(description:)) |
+| **Tool macro** | `@ChatCompletionsTool` | [`@Tool`](https://developer.apple.com/documentation/foundationmodels/tool) |
+| **Output format** | OpenAI-compatible JSON Schema | Apple on-device constrained decoding |
+| **Inference target** | Cloud APIs (OpenAI, Anthropic, etc.) | On-device Apple Intelligence |
+| **Platform** | macOS 13+ / iOS 16+ | macOS 26+ / iOS 26+ |
+
+The `ChatCompletionsTool*` prefix is deliberately chosen so you can import both packages in the same project with zero naming collisions. This means you can support both on-device and cloud-based inference from the same codebase.
+
 ## Designed for SwiftChatCompletionsDSL
 
 SwiftChatCompletionsMacros is the compile-time companion to [SwiftChatCompletionsDSL](https://github.com/RichNasz/SwiftChatCompletionsDSL). Use the DSL to make requests and this package to define your tools -- they work together seamlessly.
-
-The `@ChatCompletionsTool` / `@ChatCompletionsToolArguments` / `@ChatCompletionsToolGuide` names are deliberately chosen to avoid conflicts with Apple's FoundationModels framework (`@Tool`, `@Generable`, `@Guide`). You can import both packages in the same project with zero naming collisions.
 
 ## Requirements
 
