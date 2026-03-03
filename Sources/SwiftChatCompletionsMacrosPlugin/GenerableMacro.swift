@@ -13,7 +13,7 @@ extension GenerableMacro: MemberMacro {
 		conformingTo protocols: [TypeSyntax],
 		in context: some MacroExpansionContext
 	) throws -> [DeclSyntax] {
-		guard declaration.as(StructDeclSyntax.self) != nil else {
+		guard let structDecl = declaration.as(StructDeclSyntax.self) else {
 			context.diagnose(.init(
 				node: node,
 				message: DiagnosticMessage(
@@ -24,8 +24,6 @@ extension GenerableMacro: MemberMacro {
 			))
 			return []
 		}
-
-		let structDecl = declaration.as(StructDeclSyntax.self)!
 		let properties = extractStoredProperties(from: structDecl)
 
 		var propertyEntries: [String] = []
@@ -107,9 +105,7 @@ private func extractStoredProperties(from structDecl: StructDeclSyntax) -> [Prop
 
 		// Skip computed properties (those with accessor blocks containing get/set)
 		for binding in varDecl.bindings {
-			if let accessorBlock = binding.accessorBlock {
-				// If it has accessors, it's computed — skip
-				_ = accessorBlock
+			if binding.accessorBlock != nil {
 				continue
 			}
 
@@ -181,18 +177,27 @@ private func extractGuide(from attributes: AttributeListSyntax) -> (String?, Con
 	return (nil, nil)
 }
 
+private func extractRangeBounds(from expr: ExprSyntax) -> (String, String)? {
+	if let seq = expr.as(SequenceExprSyntax.self) {
+		let elements = Array(seq.elements)
+		if elements.count == 3 {
+			return (elements[0].trimmedDescription, elements[2].trimmedDescription)
+		}
+	}
+	if let infix = expr.as(InfixOperatorExprSyntax.self) {
+		return (infix.leftOperand.trimmedDescription, infix.rightOperand.trimmedDescription)
+	}
+	return nil
+}
+
 private func parseConstraint(from expr: ExprSyntax) -> ConstraintInfo? {
 	guard let funcCall = expr.as(FunctionCallExprSyntax.self) else {
-		// Check for .anyOf, .range, etc.
-		if let memberAccess = expr.as(MemberAccessExprSyntax.self) {
-			_ = memberAccess
-		}
 		return nil
 	}
 
 	let callee = funcCall.calledExpression.trimmedDescription
 
-	if callee.hasSuffix("anyOf") || callee == ".anyOf" {
+	if callee.hasSuffix("anyOf") {
 		if let firstArg = funcCall.arguments.first,
 		   let arrayExpr = firstArg.expression.as(ArrayExprSyntax.self)
 		{
@@ -204,39 +209,27 @@ private func parseConstraint(from expr: ExprSyntax) -> ConstraintInfo? {
 			}
 			return .anyOf(values)
 		}
-	} else if callee.hasSuffix("range") || callee == ".range" {
+	} else if callee.hasSuffix("range") {
 		if let firstArg = funcCall.arguments.first,
-		   let rangeExpr = firstArg.expression.as(SequenceExprSyntax.self)
+		   let (min, max) = extractRangeBounds(from: firstArg.expression)
 		{
-			let elements = Array(rangeExpr.elements)
-			if elements.count == 3 {
-				return .range(
-					elements[0].trimmedDescription,
-					elements[2].trimmedDescription
-				)
-			}
+			return .range(min, max)
 		}
-	} else if callee.hasSuffix("doubleRange") || callee == ".doubleRange" {
+	} else if callee.hasSuffix("doubleRange") {
 		if let firstArg = funcCall.arguments.first,
-		   let rangeExpr = firstArg.expression.as(SequenceExprSyntax.self)
+		   let (min, max) = extractRangeBounds(from: firstArg.expression)
 		{
-			let elements = Array(rangeExpr.elements)
-			if elements.count == 3 {
-				return .doubleRange(
-					elements[0].trimmedDescription,
-					elements[2].trimmedDescription
-				)
-			}
+			return .doubleRange(min, max)
 		}
-	} else if callee.hasSuffix("count") || callee == ".count" {
+	} else if callee.hasSuffix("count") {
 		if let firstArg = funcCall.arguments.first {
 			return .count(firstArg.expression.trimmedDescription)
 		}
-	} else if callee.hasSuffix("minimumCount") || callee == ".minimumCount" {
+	} else if callee.hasSuffix("minimumCount") {
 		if let firstArg = funcCall.arguments.first {
 			return .minimumCount(firstArg.expression.trimmedDescription)
 		}
-	} else if callee.hasSuffix("maximumCount") || callee == ".maximumCount" {
+	} else if callee.hasSuffix("maximumCount") {
 		if let firstArg = funcCall.arguments.first {
 			return .maximumCount(firstArg.expression.trimmedDescription)
 		}

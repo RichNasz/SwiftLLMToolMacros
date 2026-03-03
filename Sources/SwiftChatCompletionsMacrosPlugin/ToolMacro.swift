@@ -1,3 +1,4 @@
+import Foundation
 import SwiftDiagnostics
 import SwiftSyntax
 import SwiftSyntaxMacros
@@ -149,7 +150,7 @@ private func extractDocComment(from trivia: Trivia) -> String? {
 			var content = text
 			if content.hasPrefix("/**") { content = String(content.dropFirst(3)) }
 			if content.hasSuffix("*/") { content = String(content.dropLast(2)) }
-			lines.append(trimWhitespace(content))
+			lines.append(content.trimmingCharacters(in: .whitespacesAndNewlines))
 		default:
 			break
 		}
@@ -160,7 +161,7 @@ private func extractDocComment(from trivia: Trivia) -> String? {
 	// Return first paragraph (up to first empty line or "- Parameter")
 	var result: [String] = []
 	for line in lines {
-		let trimmed = trimWhitespace(line)
+		let trimmed = line.trimmingCharacters(in: .whitespacesAndNewlines)
 		if trimmed.isEmpty || trimmed.hasPrefix("- Parameter") || trimmed.hasPrefix("- Returns") {
 			break
 		}
@@ -168,23 +169,6 @@ private func extractDocComment(from trivia: Trivia) -> String? {
 	}
 
 	return result.isEmpty ? nil : result.joined(separator: " ")
-}
-
-private func trimWhitespace(_ s: String) -> String {
-	var start = s.startIndex
-	var end = s.endIndex
-	while start < end && (s[start] == " " || s[start] == "\t" || s[start] == "\n" || s[start] == "\r") {
-		start = s.index(after: start)
-	}
-	while end > start {
-		let prev = s.index(before: end)
-		if s[prev] == " " || s[prev] == "\t" || s[prev] == "\n" || s[prev] == "\r" {
-			end = prev
-		} else {
-			break
-		}
-	}
-	return String(s[start..<end])
 }
 
 private func findNestedType(named name: String, in structDecl: StructDeclSyntax) -> DeclSyntax? {

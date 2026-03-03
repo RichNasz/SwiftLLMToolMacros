@@ -187,6 +187,62 @@ final class GenerableMacroTests: XCTestCase {
 		)
 	}
 
+	func testGenerableWithGuideRangeConstraint() throws {
+		assertMacroExpansion(
+			"""
+			@ChatCompletionsToolArguments
+			struct Query {
+				@ChatCompletionsToolGuide(description: "Number of results", .range(1...100))
+				var count: Int
+			}
+			""",
+			expandedSource: """
+			struct Query {
+				var count: Int
+
+			    public static var jsonSchema: JSONSchemaValue {
+			    \t.object(
+			    \t\tproperties: [("count", .integer(description: "Number of results", minimum: 1, maximum: 100))],
+			    \t\trequired: ["count"]
+			    \t)
+			    }
+			}
+
+			extension Query: ChatCompletionsToolArguments, Codable, Sendable {
+			}
+			""",
+			macros: testMacros
+		)
+	}
+
+	func testGenerableWithGuideDoubleRangeConstraint() throws {
+		assertMacroExpansion(
+			"""
+			@ChatCompletionsToolArguments
+			struct Query {
+				@ChatCompletionsToolGuide(description: "Temperature value", .doubleRange(0.0...2.0))
+				var temperature: Double
+			}
+			""",
+			expandedSource: """
+			struct Query {
+				var temperature: Double
+
+			    public static var jsonSchema: JSONSchemaValue {
+			    \t.object(
+			    \t\tproperties: [("temperature", .number(description: "Temperature value", minimum: 0.0, maximum: 2.0))],
+			    \t\trequired: ["temperature"]
+			    \t)
+			    }
+			}
+
+			extension Query: ChatCompletionsToolArguments, Codable, Sendable {
+			}
+			""",
+			macros: testMacros
+		)
+	}
+
 	func testGenerableWithNestedGenerable() throws {
 		assertMacroExpansion(
 			"""

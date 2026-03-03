@@ -124,7 +124,7 @@ For each stored property's `VariableDeclSyntax`, the macro walks the `attributes
 - An argument labeled `"description"` with a `StringLiteralExprSyntax` value provides the schema description.
 - An unlabeled argument (or one labeled `"_"`) is parsed as a constraint.
 
-Constraint parsing examines `FunctionCallExprSyntax` nodes, matching the callee's suffix against known constraint names (`anyOf`, `range`, `doubleRange`, `count`, `minimumCount`, `maximumCount`). For `anyOf`, it extracts string literals from an `ArrayExprSyntax`. For `range` and `doubleRange`, it extracts the two bounds from a `SequenceExprSyntax` with three elements (left bound, operator, right bound).
+Constraint parsing examines `FunctionCallExprSyntax` nodes, matching the callee's suffix against known constraint names (`anyOf`, `range`, `doubleRange`, `count`, `minimumCount`, `maximumCount`). For `anyOf`, it extracts string literals from an `ArrayExprSyntax`. For `range` and `doubleRange`, a shared `extractRangeBounds` helper extracts the two bounds, handling both `SequenceExprSyntax` (three elements: left bound, operator, right bound) and `InfixOperatorExprSyntax` (left/right operands) defensively, since swift-syntax may produce either form depending on operator folding.
 
 #### Type-to-Schema Mapping
 
