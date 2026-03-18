@@ -34,9 +34,9 @@ All commits must follow the [Conventional Commits](https://www.conventionalcommi
 
 | Scope | Applies to |
 |---|---|
-| `arguments` | `@ChatCompletionsToolArguments` macro declaration or implementation |
-| `tool` | `@ChatCompletionsTool` macro declaration or implementation |
-| `guide` | `@ChatCompletionsToolGuide` macro declaration or implementation |
+| `arguments` | `@LLMToolArguments` macro declaration or implementation |
+| `tool` | `@LLMTool` macro declaration or implementation |
+| `guide` | `@LLMToolGuide` macro declaration or implementation |
 | `types` | `JSONSchemaValue`, `ToolDefinition`, `ToolOutput`, `GuideConstraint` |
 | `plugin` | `Plugin.swift`, CompilerPlugin entry point |
 | `tests` | Test files |

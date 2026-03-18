@@ -16,16 +16,16 @@ import SwiftLLMToolMacros
 
 Define this struct **before** `RecipeSearchQuery` since it is referenced as a nested type.
 
-- Annotate with `@ChatCompletionsToolArguments`
-- Properties with `@ChatCompletionsToolGuide(description:)`:
+- Annotate with `@LLMToolArguments`
+- Properties with `@LLMToolGuide(description:)`:
   - `calories: Int` -- "Calorie count per serving"
   - `protein: Double` -- "Protein in grams"
   - `isLowSodium: Bool?` -- "Whether the recipe qualifies as low-sodium"
 
 ### 2. RecipeSearchQuery Arguments Struct
 
-- Annotate with `@ChatCompletionsToolArguments`
-- Properties with `@ChatCompletionsToolGuide`:
+- Annotate with `@LLMToolArguments`
+- Properties with `@LLMToolGuide`:
   - `query: String` -- description: "Search text for recipe names or descriptions"
   - `dietaryRestrictions: String?` -- description + `.anyOf(["vegetarian", "vegan", "gluten-free", "dairy-free"])`
   - `maxResults: Int` -- description + `.range(1...50)`
@@ -36,7 +36,7 @@ Define this struct **before** `RecipeSearchQuery` since it is referenced as a ne
 
 ### 3. RecipeSearch Tool Struct
 
-- Annotate with `@ChatCompletionsTool`
+- Annotate with `@LLMTool`
 - Doc comment: `/// Search a recipe database by query, dietary restrictions, and ingredients.`
 - `typealias Arguments = RecipeSearchQuery`
 - `func call(arguments: RecipeSearchQuery) async throws -> ToolOutput`

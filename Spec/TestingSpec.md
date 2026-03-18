@@ -23,17 +23,17 @@ Used for runtime type tests via `@Test` and `#expect`.
 Every macro must have expansion tests verifying the generated code is syntactically correct and semantically complete.
 
 Required coverage:
-- `@ChatCompletionsToolArguments` with each primitive type (`String`, `Int`, `Double`, `Bool`)
-- `@ChatCompletionsToolArguments` with optional properties (excluded from `required`)
-- `@ChatCompletionsToolArguments` with array properties
-- `@ChatCompletionsToolArguments` with nested `@ChatCompletionsToolArguments` types
-- `@ChatCompletionsToolGuide` with `description` parameter
-- `@ChatCompletionsToolGuide` with each constraint type (`.anyOf`, `.range`, `.doubleRange`, `.count`, `.minimumCount`, `.maximumCount`)
-- `@ChatCompletionsTool` struct expansion (name, description, toolDefinition)
-- `@ChatCompletionsTool` PascalCase-to-snake_case name conversion
-- `@ChatCompletionsTool` doc comment extraction for description
-- Error diagnostic when `@ChatCompletionsToolArguments` applied to non-struct
-- Error diagnostic when `@ChatCompletionsTool` applied to non-struct
+- `@LLMToolArguments` with each primitive type (`String`, `Int`, `Double`, `Bool`)
+- `@LLMToolArguments` with optional properties (excluded from `required`)
+- `@LLMToolArguments` with array properties
+- `@LLMToolArguments` with nested `@LLMToolArguments` types
+- `@LLMToolGuide` with `description` parameter
+- `@LLMToolGuide` with each constraint type (`.anyOf`, `.range`, `.doubleRange`, `.count`, `.minimumCount`, `.maximumCount`)
+- `@LLMTool` struct expansion (name, description, toolDefinition)
+- `@LLMTool` PascalCase-to-snake_case name conversion
+- `@LLMTool` doc comment extraction for description
+- Error diagnostic when `@LLMToolArguments` applied to non-struct
+- Error diagnostic when `@LLMTool` applied to non-struct
 
 ### Tier 2: Important — Runtime Encoding Tests
 

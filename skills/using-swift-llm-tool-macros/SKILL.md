@@ -2,8 +2,8 @@
 name: using-swift-llm-tool-macros
 description: >
   Helps the agent use the SwiftLLMToolMacros Swift package to define
-  OpenAI-compatible tool definitions at compile time using @ChatCompletionsTool,
-  @ChatCompletionsToolArguments, and @ChatCompletionsToolGuide macros. Useful when
+  OpenAI-compatible tool definitions at compile time using @LLMTool,
+  @LLMToolArguments, and @LLMToolGuide macros. Useful when
   building function calling, JSON Schema generation, or chat completions tooling
   in Swift. The macro names avoid conflicts with Apple FoundationModels.
 ---
@@ -34,14 +34,14 @@ import SwiftLLMToolMacros
 
 ## Macros
 
-### @ChatCompletionsToolArguments
+### @LLMToolArguments
 
-Attach to a **struct** to generate a `static var jsonSchema: JSONSchemaValue` that describes stored properties as an OpenAI-compatible JSON Schema. Also synthesizes `ChatCompletionsToolArguments`, `Codable`, and `Sendable` conformances via extension.
+Attach to a **struct** to generate a `static var jsonSchema: JSONSchemaValue` that describes stored properties as an OpenAI-compatible JSON Schema. Also synthesizes `LLMToolArguments`, `Codable`, and `Sendable` conformances via extension.
 
 ```swift
-@ChatCompletionsToolArguments
+@LLMToolArguments
 struct WeatherQuery {
-    @ChatCompletionsToolGuide(description: "The city name")
+    @LLMToolGuide(description: "The city name")
     var location: String
     var unit: String?
 }
@@ -59,22 +59,22 @@ public static var jsonSchema: JSONSchemaValue {
         required: ["location"]  // optionals excluded
     )
 }
-extension WeatherQuery: ChatCompletionsToolArguments, Codable, Sendable {}
+extension WeatherQuery: LLMToolArguments, Codable, Sendable {}
 ```
 
-### @ChatCompletionsTool
+### @LLMTool
 
 Attach to a **struct** that has:
 
-1. A `typealias Arguments` pointing to a `ChatCompletionsToolArguments`-conforming type
+1. A `typealias Arguments` pointing to a `LLMToolArguments`-conforming type
 2. A `func call(arguments:) async throws -> ToolOutput` method
 3. A **doc comment** on the struct (becomes the tool description)
 
-Generates `static var toolDefinition: ToolDefinition`, `static var name: String`, `static var description: String`, and `ChatCompletionsTool` conformance.
+Generates `static var toolDefinition: ToolDefinition`, `static var name: String`, `static var description: String`, and `LLMTool` conformance.
 
 ```swift
 /// Get the current weather for a location.
-@ChatCompletionsTool
+@LLMTool
 struct GetWeather {
     typealias Arguments = WeatherQuery
 
@@ -86,19 +86,19 @@ struct GetWeather {
 
 The `name` is auto-derived as snake_case from the struct name (`GetWeather` -> `"get_weather"`).
 
-### @ChatCompletionsToolGuide
+### @LLMToolGuide
 
-A **marker macro** -- generates no code itself. Attach to stored properties inside a `@ChatCompletionsToolArguments` struct to add a description and optional constraint to that property's JSON Schema entry.
+A **marker macro** -- generates no code itself. Attach to stored properties inside a `@LLMToolArguments` struct to add a description and optional constraint to that property's JSON Schema entry.
 
 ```swift
-@ChatCompletionsToolGuide(description: "Search text")
+@LLMToolGuide(description: "Search text")
 var query: String
 
-@ChatCompletionsToolGuide(description: "Max results", .range(1...100))
+@LLMToolGuide(description: "Max results", .range(1...100))
 var limit: Int
 ```
 
-Signature: `@ChatCompletionsToolGuide(description: String, _ constraint: GuideConstraint? = nil)`
+Signature: `@LLMToolGuide(description: String, _ constraint: GuideConstraint? = nil)`
 
 ## Type-to-Schema Mapping
 
@@ -110,7 +110,7 @@ Signature: `@ChatCompletionsToolGuide(description: String, _ constraint: GuideCo
 | `Bool` | `{"type": "boolean"}` | Yes |
 | `T?` | Same schema as `T` | No |
 | `[T]` | `{"type": "array", "items": ...}` | Yes |
-| Nested `@ChatCompletionsToolArguments` | Delegates to nested type's `jsonSchema` | Yes |
+| Nested `@LLMToolArguments` | Delegates to nested type's `jsonSchema` | Yes |
 | `.null` (JSONSchemaValue) | `{"type": "null"}` | Yes |
 
 ## GuideConstraint Reference
@@ -132,11 +132,11 @@ Define `Arguments` as a nested struct inside the tool:
 
 ```swift
 /// Search the database.
-@ChatCompletionsTool
+@LLMTool
 struct SearchDB {
-    @ChatCompletionsToolArguments
-    struct Arguments: ChatCompletionsToolArguments {
-        @ChatCompletionsToolGuide(description: "Search query")
+    @LLMToolArguments
+    struct Arguments: LLMToolArguments {
+        @LLMToolGuide(description: "Search query")
         var query: String
     }
 
@@ -151,14 +151,14 @@ struct SearchDB {
 Define `Arguments` separately and reference via typealias:
 
 ```swift
-@ChatCompletionsToolArguments
+@LLMToolArguments
 struct SearchQuery {
-    @ChatCompletionsToolGuide(description: "Search query")
+    @LLMToolGuide(description: "Search query")
     var query: String
 }
 
 /// Search the database.
-@ChatCompletionsTool
+@LLMTool
 struct SearchDB {
     typealias Arguments = SearchQuery
 
@@ -170,20 +170,20 @@ struct SearchDB {
 
 ### Nested Types
 
-`@ChatCompletionsToolArguments` structs can nest inside each other. The nested type's `jsonSchema` is inlined as an object schema:
+`@LLMToolArguments` structs can nest inside each other. The nested type's `jsonSchema` is inlined as an object schema:
 
 ```swift
-@ChatCompletionsToolArguments
+@LLMToolArguments
 struct Address {
-    @ChatCompletionsToolGuide(description: "Street address")
+    @LLMToolGuide(description: "Street address")
     var street: String
-    @ChatCompletionsToolGuide(description: "City name")
+    @LLMToolGuide(description: "City name")
     var city: String
 }
 
-@ChatCompletionsToolArguments
+@LLMToolArguments
 struct Person {
-    @ChatCompletionsToolGuide(description: "Full name")
+    @LLMToolGuide(description: "Full name")
     var name: String
     var address: Address  // nested object schema
 }
@@ -191,19 +191,19 @@ struct Person {
 
 ## Protocols
 
-### ChatCompletionsToolArguments
+### LLMToolArguments
 
 ```swift
-public protocol ChatCompletionsToolArguments: Codable, Sendable {
+public protocol LLMToolArguments: Codable, Sendable {
     static var jsonSchema: JSONSchemaValue { get }
 }
 ```
 
-### ChatCompletionsTool
+### LLMTool
 
 ```swift
-public protocol ChatCompletionsTool: Sendable {
-    associatedtype Arguments: ChatCompletionsToolArguments
+public protocol LLMTool: Sendable {
+    associatedtype Arguments: LLMToolArguments
     static var name: String { get }
     static var description: String { get }
     static var toolDefinition: ToolDefinition { get }
@@ -230,16 +230,16 @@ let data = try JSONEncoder().encode(tools)
 
 ## Common Pitfalls
 
-1. **Struct-only**: `@ChatCompletionsToolArguments` and `@ChatCompletionsTool` only work on structs. Applying them to classes, enums, or actors produces a compile error.
+1. **Struct-only**: `@LLMToolArguments` and `@LLMTool` only work on structs. Applying them to classes, enums, or actors produces a compile error.
 
-2. **Arguments resolution**: `@ChatCompletionsTool` requires either a `typealias Arguments = SomeType` or a nested `struct Arguments` that conforms to `ChatCompletionsToolArguments`.
+2. **Arguments resolution**: `@LLMTool` requires either a `typealias Arguments = SomeType` or a nested `struct Arguments` that conforms to `LLMToolArguments`.
 
 3. **call signature**: The `call` method must be `func call(arguments:) async throws -> ToolOutput` with the parameter label `arguments`.
 
 4. **Constraint type matching**: Match `GuideConstraint` to the property type -- `.anyOf` for `String`, `.range` for `Int`, `.doubleRange` for `Double`, `.count`/`.minimumCount`/`.maximumCount` for arrays.
 
-5. **FoundationModels coexistence**: These macros are named `@ChatCompletionsTool*` specifically to avoid conflicts with Apple FoundationModels' `@Tool`, `@Generable`, `@Guide`. Both packages can be imported in the same file.
+5. **FoundationModels coexistence**: These macros are named `@LLMTool*` specifically to avoid conflicts with Apple FoundationModels' `@Tool`, `@Generable`, `@Guide`. Both packages can be imported in the same file.
 
 6. **Optional handling**: Optional properties (`T?`) get the same schema as `T` but are excluded from the `required` array. There is no nullable schema wrapper.
 
-7. **Doc comment required for tools**: `@ChatCompletionsTool` extracts the struct's `///` doc comment as the tool description. Missing doc comments produce an empty description string.
+7. **Doc comment required for tools**: `@LLMTool` extracts the struct's `///` doc comment as the tool description. Missing doc comments produce an empty description string.

@@ -12,7 +12,7 @@ The README must contain these sections in this exact order:
 4. **Quick Start** (H2) — Installation + Basic Usage subsections
 5. **How It Works** (H2)
 6. **Supported Types** (H2)
-7. **@ChatCompletionsToolGuide Constraints** (H2)
+7. **@LLMToolGuide Constraints** (H2)
 8. **Apple FoundationModels Compatibility** (H2) — Comparison table, links to Apple docs
 9. **Designed for SwiftChatCompletionsDSL** (H2)
 10. **Requirements** (H2)
@@ -40,8 +40,8 @@ Update version numbers when requirements change.
 The Quick Start code example must:
 
 - Be a single, self-contained code block that compiles
-- Demonstrate `@ChatCompletionsToolArguments` with `@ChatCompletionsToolGuide` descriptions
-- Demonstrate `@ChatCompletionsTool` with doc comment and `Arguments` typealias
+- Demonstrate `@LLMToolArguments` with `@LLMToolGuide` descriptions
+- Demonstrate `@LLMTool` with doc comment and `Arguments` typealias
 - Show `toolDefinition` encoding to JSON
 - Include at least one optional property (to show `required` field behavior)
 
@@ -73,11 +73,11 @@ CLAUDE.md is the AI's entry point to the codebase. It should contain enough cont
 
 The example file must show:
 
-- `@ChatCompletionsToolArguments` struct with `@ChatCompletionsToolGuide` descriptions on properties
-- `@ChatCompletionsTool` struct with doc comment, `Arguments` typealias, and `call` method
+- `@LLMToolArguments` struct with `@LLMToolGuide` descriptions on properties
+- `@LLMTool` struct with doc comment, `Arguments` typealias, and `call` method
 - Using `toolDefinition` to encode JSON
 - Multiple tools (at least 2)
-- Nested `@ChatCompletionsToolArguments` types
+- Nested `@LLMToolArguments` types
 
 ### File Header
 
@@ -163,7 +163,7 @@ The SKILL.md must include:
 - Type-to-Schema mapping table
 - GuideConstraint reference table (constraint, applies to, example)
 - Usage patterns with code examples (inline Arguments, external typealias, nested types)
-- Protocol signatures (`ChatCompletionsToolArguments`, `ChatCompletionsTool`)
+- Protocol signatures (`LLMToolArguments`, `LLMTool`)
 - Using `toolDefinition` (encoding to JSON)
 - Common pitfalls (struct-only, Arguments resolution, call signature, constraint type matching, FoundationModels coexistence, optional handling, doc comment format)
 
@@ -222,6 +222,6 @@ Sample WHAT and HOW specs demonstrating how a package consumer would use spec-dr
 ### HOW Spec Requirements
 
 - Must reference SwiftLLMToolMacros by import name
-- Must name specific macros (`@ChatCompletionsToolArguments`, `@ChatCompletionsTool`, `@ChatCompletionsToolGuide`)
+- Must name specific macros (`@LLMToolArguments`, `@LLMTool`, `@LLMToolGuide`)
 - Must show expected JSON Schema output shape
 - Must cover component ordering (nested type defined before referencing type)

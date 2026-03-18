@@ -10,13 +10,13 @@ JSON Schema generation happens entirely at compile time via Swift macros. The ge
 - Compile-time error diagnostics for unsupported types
 - Full type safety with no possibility of runtime schema/type mismatches
 
-## Why `@ChatCompletionsToolGuide` Is a Marker Macro
+## Why `@LLMToolGuide` Is a Marker Macro
 
-`@ChatCompletionsToolGuide` is declared as a `PeerMacro` but generates no code. Its attributes are read by `@ChatCompletionsToolArguments` during expansion. This avoids expansion ordering conflicts — if `@ChatCompletionsToolGuide` generated code that `@ChatCompletionsToolArguments` consumed, the compiler would need to guarantee `@ChatCompletionsToolGuide` expands first, which Swift macros do not guarantee for sibling declarations.
+`@LLMToolGuide` is declared as a `PeerMacro` but generates no code. Its attributes are read by `@LLMToolArguments` during expansion. This avoids expansion ordering conflicts — if `@LLMToolGuide` generated code that `@LLMToolArguments` consumed, the compiler would need to guarantee `@LLMToolGuide` expands first, which Swift macros do not guarantee for sibling declarations.
 
 ## Why Struct-Only Restriction
 
-Both `@ChatCompletionsToolArguments` and `@ChatCompletionsTool` require structs because:
+Both `@LLMToolArguments` and `@LLMTool` require structs because:
 
 - JSON Schema `"type": "object"` maps cleanly to Swift structs (named properties with fixed types)
 - Structs provide value semantics matching JSON's data model
@@ -29,8 +29,8 @@ The `ToolDefinition` type encodes to `{"type":"function","function":{...}}` — 
 
 ## Why FoundationModels API Naming
 
-The macros were originally named `@Tool`, `@Generable`, and `@Guide` to mirror Apple's FoundationModels framework (introduced in iOS 26 / macOS 26). They were renamed to `@ChatCompletionsTool`, `@ChatCompletionsToolArguments`, and `@ChatCompletionsToolGuide` to avoid conflicts with Apple's FoundationModels macros while maintaining semantic clarity. The `ChatCompletionsTool` prefix makes the macros' purpose self-documenting and eliminates naming collisions when both packages are imported. This means:
+The macros were originally named `@Tool`, `@Generable`, and `@Guide` to mirror Apple's FoundationModels framework (introduced in iOS 26 / macOS 26). They were renamed to `@LLMTool`, `@LLMToolArguments`, and `@LLMToolGuide` to avoid conflicts with Apple's FoundationModels macros while remaining broadly applicable to any LLM API (not just chat completions). The `LLMTool*` prefix is concise, collision-free, and communicates the macros' purpose without tying them to a specific API style. This means:
 
 - Developers can import both FoundationModels and SwiftLLMToolMacros without name conflicts
-- The macro names clearly communicate their purpose — generating definitions for OpenAI-compatible chat completions tool calling
+- The macro names clearly communicate their purpose — generating definitions for LLM tool calling — without overfitting to the OpenAI chat completions naming convention
 - The protocol shapes still mirror FoundationModels conventions, so developers familiar with that framework can transfer their knowledge with minimal friction

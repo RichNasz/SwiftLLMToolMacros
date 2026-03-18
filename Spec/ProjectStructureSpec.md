@@ -26,14 +26,14 @@ SwiftLLMToolMacros/
 │   └── TestingSpec.md                    # Testing philosophy
 ├── Sources/
 │   ├── SwiftLLMToolMacros/       # Public API (library target)
-│   │   ├── Macros.swift                  # @ChatCompletionsTool, @ChatCompletionsToolArguments, @ChatCompletionsToolGuide declarations
-│   │   ├── Protocols.swift               # ChatCompletionsToolArguments, ChatCompletionsTool protocols
+│   │   ├── Macros.swift                  # @LLMTool, @LLMToolArguments, @LLMToolGuide declarations
+│   │   ├── Protocols.swift               # LLMToolArguments, LLMTool protocols
 │   │   └── Types.swift                   # JSONSchemaValue, ToolDefinition, etc.
 │   └── SwiftLLMToolMacrosPlugin/ # Compiler plugin (macro target)
 │       ├── Plugin.swift                  # CompilerPlugin entry point
-│       ├── GenerableMacro.swift          # @ChatCompletionsToolArguments schema generation
-│       ├── ToolMacro.swift               # @ChatCompletionsTool definition generation
-│       └── GuideMacro.swift              # @ChatCompletionsToolGuide marker macro
+│       ├── GenerableMacro.swift          # @LLMToolArguments schema generation
+│       ├── ToolMacro.swift               # @LLMTool definition generation
+│       └── GuideMacro.swift              # @LLMToolGuide marker macro
 ├── Tests/
 │   └── SwiftLLMToolMacrosTests/
 │       ├── SwiftLLMToolMacrosTests.swift  # Macro expansion tests (XCTest)
@@ -75,7 +75,7 @@ Tests for both macro expansion correctness and runtime type behavior. Uses two t
 | Content | Target | Rationale |
 |---|---|---|
 | Macro declarations (`@attached(...)`) | Library | Users need these in scope to use macros |
-| Protocols (`ChatCompletionsToolArguments`, `ChatCompletionsTool`) | Library | Users conform to these protocols |
+| Protocols (`LLMToolArguments`, `LLMTool`) | Library | Users conform to these protocols |
 | Runtime types (`JSONSchemaValue`, `ToolDefinition`) | Library | Users create, encode, and pass these types |
 | Macro implementations (`MemberMacro`, `ExtensionMacro`) | Plugin | Compiler-loaded, not user-visible |
 | AST parsing and code generation | Plugin | Depends on swift-syntax |

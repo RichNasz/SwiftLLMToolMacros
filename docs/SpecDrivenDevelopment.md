@@ -30,7 +30,7 @@ An [Agent Skill](https://agentskills.io) gives the AI coding agent domain-specif
 
 - The three macros and what each generates
 - Type-to-schema mapping rules
-- `@ChatCompletionsToolGuide` constraint options
+- `@LLMToolGuide` constraint options
 - Common pitfalls (struct-only restriction, doc comment requirements, argument resolution)
 
 Without the skill, the agent relies on its general training, which may be outdated or incomplete for this package. With the skill, the agent knows the current API surface.
@@ -42,7 +42,7 @@ See the [README](../README.md#installing-the-skill) for installation instruction
 Each tool covers a different layer. Together they form a complete pipeline from requirements to working code:
 
 1. **You write a WHAT spec** -- "I want a RecipeSearch tool with these arguments, types, and constraints"
-2. **You write a HOW spec** -- "Use `@ChatCompletionsToolArguments` on this struct, annotate these properties with `@ChatCompletionsToolGuide`, define the nested type first"
+2. **You write a HOW spec** -- "Use `@LLMToolArguments` on this struct, annotate these properties with `@LLMToolGuide`, define the nested type first"
 3. **The agent reads the HOW spec and has the Skill loaded** -- it knows both *your* requirements and *the package's* API, so it generates correct Swift code
 4. **You review and run `swift build && swift test`** -- verify the output matches the WHAT spec's acceptance criteria
 
