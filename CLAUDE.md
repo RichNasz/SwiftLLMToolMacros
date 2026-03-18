@@ -87,6 +87,15 @@ skills/
     SKILL.md                              # Agent Skill for AI coding assistants
 ```
 
+## Claude Code Files
+
+Only the following Claude-related files are tracked in this repository:
+
+- **`CLAUDE.md`** — Project instructions loaded automatically by Claude Code
+- **`skills/`** — Agent skills for package consumers and AI coding assistants
+
+The `.claude/` directory (including `settings.local.json` and any other local configuration) is gitignored and must never be committed. It contains local developer permissions and settings that are machine-specific and should not be released.
+
 ## Testing Strategy
 
 - **Macro expansion tests** use `assertMacroExpansion` from SwiftSyntaxMacrosTestSupport (XCTest)
