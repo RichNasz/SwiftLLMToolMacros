@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Changed
+- Renamed package from `SwiftChatCompletionsMacros` to `SwiftLLMToolMacros`
+- Renamed macros: `@ChatCompletionsToolArguments` → `@LLMToolArguments`, `@ChatCompletionsTool` → `@LLMTool`, `@ChatCompletionsToolGuide` → `@LLMToolGuide`
+- Renamed protocols: `ChatCompletionsToolArguments` → `LLMToolArguments`, `ChatCompletionsTool` → `LLMTool`
+
 ### Added
 - `JSONSchemaValue.null` case for representing `{"type": "null"}` in JSON Schema
 

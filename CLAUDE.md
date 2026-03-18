@@ -1,8 +1,8 @@
-# SwiftChatCompletionsMacros
+# SwiftLLMToolMacros
 
 ## Project Overview
 
-SwiftChatCompletionsMacros is a Swift Package Manager project that provides compile-time Swift macros (`@ChatCompletionsTool`, `@ChatCompletionsToolArguments`, `@ChatCompletionsToolGuide`) for generating OpenAI-compatible JSON Schema definitions. It is the compile-time companion to SwiftChatCompletionsDSL, with naming designed to avoid conflicts with Apple FoundationModels.
+SwiftLLMToolMacros is a Swift Package Manager project that provides compile-time Swift macros (`@LLMTool`, `@LLMToolArguments`, `@LLMToolGuide`) for generating OpenAI-compatible JSON Schema definitions. It is the compile-time companion to both SwiftChatCompletionsDSL and SwiftOpenResponsesDSL, with naming designed to avoid conflicts with Apple FoundationModels.
 
 ## Commands
 
@@ -16,27 +16,27 @@ SwiftChatCompletionsMacros is a Swift Package Manager project that provides comp
 
 ### Three-Target Structure
 
-1. **SwiftChatCompletionsMacros** (library target) - Public API that users import
-   - `Macros.swift` - `@ChatCompletionsTool`, `@ChatCompletionsToolArguments`, `@ChatCompletionsToolGuide` macro declarations
-   - `Protocols.swift` - `ChatCompletionsToolArguments` and `ChatCompletionsTool` protocols
+1. **SwiftLLMToolMacros** (library target) - Public API that users import
+   - `Macros.swift` - `@LLMTool`, `@LLMToolArguments`, `@LLMToolGuide` macro declarations
+   - `Protocols.swift` - `LLMToolArguments` and `LLMTool` protocols
    - `Types.swift` - `JSONSchemaValue`, `ToolDefinition`, `ToolOutput`, `GuideConstraint`
 
-2. **SwiftChatCompletionsMacrosPlugin** (macro target) - Compiler plugin
+2. **SwiftLLMToolMacrosPlugin** (macro target) - Compiler plugin
    - `Plugin.swift` - CompilerPlugin entry point
    - `GenerableMacro.swift` - Core schema generation logic
    - `ToolMacro.swift` - Tool definition generation
    - `GuideMacro.swift` - Marker macro (no code generation)
 
-3. **SwiftChatCompletionsMacrosTests** (test target) - Tests
+3. **SwiftLLMToolMacrosTests** (test target) - Tests
    - XCTest-based macro expansion tests (`assertMacroExpansion`)
    - Swift Testing runtime type tests (`@Test`, `#expect`)
 
 ### Key Design Decisions
 
 - **JSON Schema at compile time**: Macros generate `JSONSchemaValue` enum constructors. The enum's `Encodable` conformance handles JSON serialization at runtime. No reflection or mirrors.
-- **`@ChatCompletionsToolGuide` is a marker macro**: Generates no code itself. `@ChatCompletionsToolArguments` reads `@ChatCompletionsToolGuide` attributes from sibling properties during expansion.
-- **`@ChatCompletionsTool` dispatches by declaration kind**: Handles structs via MemberMacro + ExtensionMacro. PeerMacro is available for future function support.
-- **Conflict-free naming**: The `ChatCompletionsTool*` prefix avoids naming collisions with Apple's FoundationModels (`@Tool`, `@Generable`, `@Guide`).
+- **`@LLMToolGuide` is a marker macro**: Generates no code itself. `@LLMToolArguments` reads `@LLMToolGuide` attributes from sibling properties during expansion.
+- **`@LLMTool` dispatches by declaration kind**: Handles structs via MemberMacro + ExtensionMacro. PeerMacro is available for future function support.
+- **Conflict-free naming**: The `LLMTool*` prefix avoids naming collisions with Apple's FoundationModels (`@Tool`, `@Generable`, `@Guide`).
 
 ### Type-to-Schema Mapping
 
@@ -48,7 +48,7 @@ SwiftChatCompletionsMacros is a Swift Package Manager project that provides comp
 | `Bool` | `{"type": "boolean"}` |
 | `T?` | Same schema, excluded from `required` |
 | `[T]` | `{"type": "array", "items": ...}` |
-| Nested `@ChatCompletionsToolArguments` | Delegates to nested type's `jsonSchema` |
+| Nested `@LLMToolArguments` | Delegates to nested type's `jsonSchema` |
 | `.null` (JSONSchemaValue) | `{"type": "null"}` |
 
 ## Dependencies
@@ -64,18 +64,18 @@ SwiftChatCompletionsMacros is a Swift Package Manager project that provides comp
 
 ```
 Sources/
-  SwiftChatCompletionsMacros/       # Public API
-    Macros.swift                    # @ChatCompletionsTool, @ChatCompletionsToolArguments, @ChatCompletionsToolGuide declarations
-    Protocols.swift                 # ChatCompletionsToolArguments, ChatCompletionsTool protocols
+  SwiftLLMToolMacros/              # Public API
+    Macros.swift                    # @LLMTool, @LLMToolArguments, @LLMToolGuide declarations
+    Protocols.swift                 # LLMToolArguments, LLMTool protocols
     Types.swift                     # JSONSchemaValue, ToolDefinition, etc.
-  SwiftChatCompletionsMacrosPlugin/ # Compiler plugin
+  SwiftLLMToolMacrosPlugin/        # Compiler plugin
     Plugin.swift                    # Entry point
     GenerableMacro.swift            # Schema generation
     ToolMacro.swift                 # Tool definition generation
     GuideMacro.swift                # Marker macro
 Tests/
-  SwiftChatCompletionsMacrosTests/
-    SwiftChatCompletionsMacrosTests.swift  # Macro expansion tests
+  SwiftLLMToolMacrosTests/
+    SwiftLLMToolMacrosTests.swift  # Macro expansion tests
     RuntimeTypeTests.swift                 # Runtime type tests
 Examples/
   BasicUsage.swift                        # Compilable usage examples
@@ -84,7 +84,7 @@ Examples/
     RecipeSearchTool-HOW.md               # Sample HOW spec for package consumers
 Spec/
   README.md                               # Spec index and philosophy
-  SwiftChatCompletionsMacros.md           # Core product spec (WHAT + HOW)
+  SwiftLLMToolMacros.md           # Core product spec (WHAT + HOW)
   DesignRationale.md                      # Design decisions (WHY)
   DocumentationSpec.md                    # Documentation rules
   ContributingSpec.md                     # Contribution standards
@@ -110,4 +110,4 @@ The `.claude/` directory (including `settings.local.json` and any other local co
 
 - **Macro expansion tests** use `assertMacroExpansion` from SwiftSyntaxMacrosTestSupport (XCTest)
 - **Runtime type tests** use Swift Testing framework (`@Test`, `#expect`)
-- Tests cover: primitive types, optionals, arrays, nested types, `@ChatCompletionsToolGuide` descriptions/constraints, error diagnostics, JSON encoding
+- Tests cover: primitive types, optionals, arrays, nested types, `@LLMToolGuide` descriptions/constraints, error diagnostics, JSON encoding

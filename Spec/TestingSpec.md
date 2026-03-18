@@ -87,7 +87,7 @@ swift test
 swift test --verbose
 
 # Run a specific test (XCTest)
-swift test --filter SwiftChatCompletionsMacrosTests.testGenerableWithStringProperty
+swift test --filter SwiftLLMToolMacrosTests.testGenerableWithStringProperty
 
 # Run a specific test (Swift Testing)
 swift test --filter RuntimeTypeTests

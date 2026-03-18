@@ -1,4 +1,4 @@
-# SwiftChatCompletionsMacros Specification
+# SwiftLLMToolMacros Specification
 
 ## WHAT
 

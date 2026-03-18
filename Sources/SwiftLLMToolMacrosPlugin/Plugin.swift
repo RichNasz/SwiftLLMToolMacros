@@ -2,7 +2,7 @@ import SwiftCompilerPlugin
 import SwiftSyntaxMacros
 
 @main
-struct SwiftChatCompletionsMacrosPlugin: CompilerPlugin {
+struct SwiftLLMToolMacrosPlugin: CompilerPlugin {
 	let providingMacros: [any Macro.Type] = [
 		GenerableMacro.self,
 		ToolMacro.self,

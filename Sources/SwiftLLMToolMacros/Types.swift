@@ -1,6 +1,6 @@
 /// JSON Schema value representation for OpenAI-compatible tool definitions.
 ///
-/// Constructed at compile time by `@ChatCompletionsToolArguments` macro expansion. Encodes to
+/// Constructed at compile time by `@LLMToolArguments` macro expansion. Encodes to
 /// OpenAI-compatible JSON Schema at runtime via `Encodable` conformance.
 public indirect enum JSONSchemaValue: Sendable, Equatable {
 	/// A JSON Schema `"type": "object"` with named properties and a required list.
@@ -160,7 +160,7 @@ extension ToolDefinition: Encodable {
 	}
 }
 
-/// Constraint types used by `@ChatCompletionsToolGuide` to add JSON Schema constraints.
+/// Constraint types used by `@LLMToolGuide` to add JSON Schema constraints.
 public enum GuideConstraint: Sendable {
 	/// Restricts a string property to specific allowed values.
 	case anyOf([String])

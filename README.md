@@ -1,4 +1,4 @@
-# SwiftChatCompletionsMacros
+# SwiftLLMToolMacros
 
 [![Swift 6.2](https://img.shields.io/badge/Swift-6.2-orange.svg)](https://swift.org)
 [![Xcode CLI](https://img.shields.io/badge/Xcode%20CLI-16+-blue.svg)](https://developer.apple.com/xcode/)
@@ -14,9 +14,9 @@ Swift macros that generate OpenAI-compatible JSON Schema at compile time -- zero
 - [Quick Start](#quick-start)
 - [How It Works](#how-it-works)
 - [Supported Types](#supported-types)
-- [@ChatCompletionsToolGuide Constraints](#chatcompletionstoolguide-constraints)
+- [@LLMToolGuide Constraints](#llmtoolguide-constraints)
 - [Apple FoundationModels Compatibility](#apple-foundationmodels-compatibility)
-- [Designed for SwiftChatCompletionsDSL](#designed-for-swiftchatcompletionsdsl)
+- [Designed for SwiftChatCompletionsDSL and SwiftOpenResponsesDSL](#designed-for-swiftchatcompletionsdsl-and-swiftopenresponsesdsl)
 - [Requirements](#requirements)
 - [Contributing](#contributing)
 - [Agent Skill](#agent-skill)
@@ -25,21 +25,21 @@ Swift macros that generate OpenAI-compatible JSON Schema at compile time -- zero
 
 ## Overview
 
-SwiftChatCompletionsMacros provides three macros for defining OpenAI-compatible tool definitions at compile time:
+SwiftLLMToolMacros provides three macros for defining OpenAI-compatible tool definitions at compile time:
 
-- **`@ChatCompletionsToolArguments`** -- Generates a JSON Schema for a struct's properties
-- **`@ChatCompletionsTool`** -- Generates an OpenAI-compatible tool definition
-- **`@ChatCompletionsToolGuide`** -- Adds descriptions and constraints to property schemas
+- **`@LLMToolArguments`** -- Generates a JSON Schema for a struct's properties
+- **`@LLMTool`** -- Generates an OpenAI-compatible tool definition
+- **`@LLMToolGuide`** -- Adds descriptions and constraints to property schemas
 
 ## Quick Start
 
 ### Installation
 
-Add SwiftChatCompletionsMacros to your `Package.swift`:
+Add SwiftLLMToolMacros to your `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/RichNasz/SwiftChatCompletionsMacros.git", from: "0.1.0")
+    .package(url: "https://github.com/RichNasz/SwiftLLMToolMacros.git", from: "0.1.0")
 ]
 ```
 
@@ -48,28 +48,28 @@ Then add it as a dependency to your target:
 ```swift
 .target(
     name: "YourTarget",
-    dependencies: ["SwiftChatCompletionsMacros"]
+    dependencies: ["SwiftLLMToolMacros"]
 )
 ```
 
 ### Basic Usage
 
 ```swift
-import SwiftChatCompletionsMacros
+import SwiftLLMToolMacros
 
 // Define a structured type for tool arguments
-@ChatCompletionsToolArguments
+@LLMToolArguments
 struct WeatherQuery {
-    @ChatCompletionsToolGuide(description: "The city to get weather for")
+    @LLMToolGuide(description: "The city to get weather for")
     var location: String
 
-    @ChatCompletionsToolGuide(description: "Temperature unit", .anyOf(["celsius", "fahrenheit"]))
+    @LLMToolGuide(description: "Temperature unit", .anyOf(["celsius", "fahrenheit"]))
     var unit: String?
 }
 
 // Define a tool
 /// Get the current weather for a location.
-@ChatCompletionsTool
+@LLMTool
 struct GetWeather {
     typealias Arguments = WeatherQuery
 
@@ -87,14 +87,14 @@ let jsonData = try JSONEncoder().encode(definition)
 
 ## How It Works
 
-`@ChatCompletionsToolArguments` expands your struct at compile time, generating a `jsonSchema` property and protocol conformances. No runtime reflection or mirrors.
+`@LLMToolArguments` expands your struct at compile time, generating a `jsonSchema` property and protocol conformances. No runtime reflection or mirrors.
 
 **You write:**
 
 ```swift
-@ChatCompletionsToolArguments
+@LLMToolArguments
 struct WeatherQuery {
-    @ChatCompletionsToolGuide(description: "The city name")
+    @LLMToolGuide(description: "The city name")
     var location: String
     var unit: String?
 }
@@ -118,7 +118,7 @@ struct WeatherQuery {
     }
 }
 
-extension WeatherQuery: ChatCompletionsToolArguments, Codable, Sendable {}
+extension WeatherQuery: LLMToolArguments, Codable, Sendable {}
 ```
 
 ## Supported Types
@@ -131,21 +131,21 @@ extension WeatherQuery: ChatCompletionsToolArguments, Codable, Sendable {}
 | `Bool` | `{"type": "boolean"}` | Yes |
 | `T?` | Same as `T` | No |
 | `[T]` | `{"type": "array", "items": ...}` | Yes |
-| Nested `@ChatCompletionsToolArguments` | `{"type": "object", ...}` | Yes |
+| Nested `@LLMToolArguments` | `{"type": "object", ...}` | Yes |
 | `.null` (JSONSchemaValue) | `{"type": "null"}` | Yes |
 
-## `@ChatCompletionsToolGuide` Constraints
+## `@LLMToolGuide` Constraints
 
 ```swift
-@ChatCompletionsToolArguments
+@LLMToolArguments
 struct SearchQuery {
-    @ChatCompletionsToolGuide(description: "Search text")
+    @LLMToolGuide(description: "Search text")
     var query: String
 
-    @ChatCompletionsToolGuide(description: "Max results", .range(1...100))
+    @LLMToolGuide(description: "Max results", .range(1...100))
     var limit: Int
 
-    @ChatCompletionsToolGuide(description: "Sort order", .anyOf(["relevance", "date", "popularity"]))
+    @LLMToolGuide(description: "Sort order", .anyOf(["relevance", "date", "popularity"]))
     var sortBy: String?
 }
 ```
@@ -162,22 +162,22 @@ Available constraints:
 
 Apple's [FoundationModels](https://developer.apple.com/documentation/FoundationModels) framework provides macros for on-device inference: [`@Generable`](https://developer.apple.com/documentation/foundationmodels/generable) for structured output, [`@Guide`](https://developer.apple.com/documentation/foundationmodels/guide(description:)) for property descriptions and constraints, and [`@Tool`](https://developer.apple.com/documentation/foundationmodels/tool) for [tool calling](https://developer.apple.com/documentation/foundationmodels/expanding-generation-with-tool-calling).
 
-SwiftChatCompletionsMacros follows the same macro-driven pattern -- annotate structs, get schema generation at compile time -- but targets **cloud-based APIs** (OpenAI, Anthropic, Mistral, Groq) instead of Apple's on-device model. The two frameworks serve different inference targets but share the same philosophy: define your types once, let the compiler generate the schema.
+SwiftLLMToolMacros follows the same macro-driven pattern -- annotate structs, get schema generation at compile time -- but targets **cloud-based APIs** (OpenAI, Anthropic, Mistral, Groq) instead of Apple's on-device model. The two frameworks serve different inference targets but share the same philosophy: define your types once, let the compiler generate the schema.
 
-| | SwiftChatCompletionsMacros | Apple FoundationModels |
+| | SwiftLLMToolMacros | Apple FoundationModels |
 |---|---|---|
-| **Schema macro** | `@ChatCompletionsToolArguments` | [`@Generable`](https://developer.apple.com/documentation/foundationmodels/generable) |
-| **Constraint macro** | `@ChatCompletionsToolGuide` | [`@Guide`](https://developer.apple.com/documentation/foundationmodels/guide(description:)) |
-| **Tool macro** | `@ChatCompletionsTool` | [`@Tool`](https://developer.apple.com/documentation/foundationmodels/tool) |
+| **Schema macro** | `@LLMToolArguments` | [`@Generable`](https://developer.apple.com/documentation/foundationmodels/generable) |
+| **Constraint macro** | `@LLMToolGuide` | [`@Guide`](https://developer.apple.com/documentation/foundationmodels/guide(description:)) |
+| **Tool macro** | `@LLMTool` | [`@Tool`](https://developer.apple.com/documentation/foundationmodels/tool) |
 | **Output format** | OpenAI-compatible JSON Schema | Apple on-device constrained decoding |
 | **Inference target** | Cloud APIs (OpenAI, Anthropic, etc.) | On-device Apple Intelligence |
 | **Platform** | macOS 13+ / iOS 16+ | macOS 26+ / iOS 26+ |
 
-The `ChatCompletionsTool*` prefix is deliberately chosen so you can import both packages in the same project with zero naming collisions. This means you can support both on-device and cloud-based inference from the same codebase.
+The `LLMTool*` prefix is deliberately chosen so you can import both packages in the same project with zero naming collisions. This means you can support both on-device and cloud-based inference from the same codebase.
 
-## Designed for SwiftChatCompletionsDSL
+## Designed for SwiftChatCompletionsDSL and SwiftOpenResponsesDSL
 
-SwiftChatCompletionsMacros is the compile-time companion to [SwiftChatCompletionsDSL](https://github.com/RichNasz/SwiftChatCompletionsDSL). Use the DSL to make requests and this package to define your tools -- they work together seamlessly.
+SwiftLLMToolMacros is the compile-time companion to [SwiftChatCompletionsDSL](https://github.com/RichNasz/SwiftChatCompletionsDSL) and [SwiftOpenResponsesDSL](https://github.com/RichNasz/SwiftOpenResponsesDSL). Use either DSL to make requests and this package to define your tools -- they work together seamlessly.
 
 ## Requirements
 
@@ -196,10 +196,10 @@ This project includes an [Agent Skill](https://agentskills.io) at [`skills/using
 
 ### Installing the Skill
 
-Adding SwiftChatCompletionsMacros as an SPM dependency does **not** make the skill available to your agent -- SPM downloads sources into `.build/checkouts/`, which agents don't scan. To install the skill, copy the folder into a location your agent is configured to discover:
+Adding SwiftLLMToolMacros as an SPM dependency does **not** make the skill available to your agent -- SPM downloads sources into `.build/checkouts/`, which agents don't scan. To install the skill, copy the folder into a location your agent is configured to discover:
 
 ```bash
-cp -r .build/checkouts/SwiftChatCompletionsMacros/skills/using-swift-chat-completions-macros \
+cp -r .build/checkouts/SwiftLLMToolMacros/skills/using-swift-chat-completions-macros \
       skills/using-swift-chat-completions-macros
 ```
 
@@ -211,8 +211,8 @@ If you use AI coding agents, you can pair the Agent Skill with WHAT and HOW spec
 
 ## Attribution
 
-SwiftChatCompletionsMacros is created and maintained by [RichNasz](https://github.com/RichNasz). Code is generated with [Claude Code](https://claude.ai/code) by Anthropic. All code is human-reviewed and human-directed.
+SwiftLLMToolMacros is created and maintained by [RichNasz](https://github.com/RichNasz). Code is generated with [Claude Code](https://claude.ai/code) by Anthropic. All code is human-reviewed and human-directed.
 
 ## License
 
-SwiftChatCompletionsMacros is available under the Apache License 2.0. See [LICENSE](LICENSE) for details.
+SwiftLLMToolMacros is available under the Apache License 2.0. See [LICENSE](LICENSE) for details.

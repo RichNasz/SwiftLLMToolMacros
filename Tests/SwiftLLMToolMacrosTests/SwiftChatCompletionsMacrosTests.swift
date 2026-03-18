@@ -2,26 +2,26 @@ import SwiftSyntaxMacros
 import SwiftSyntaxMacrosTestSupport
 import XCTest
 
-#if canImport(SwiftChatCompletionsMacrosPlugin)
-import SwiftChatCompletionsMacrosPlugin
+#if canImport(SwiftLLMToolMacrosPlugin)
+import SwiftLLMToolMacrosPlugin
 
 let testMacros: [String: any Macro.Type] = [
-	"ChatCompletionsToolArguments": GenerableMacro.self,
-	"ChatCompletionsTool": ToolMacro.self,
-	"ChatCompletionsToolGuide": GuideMacro.self,
+	"LLMToolArguments": GenerableMacro.self,
+	"LLMTool": ToolMacro.self,
+	"LLMToolGuide": GuideMacro.self,
 ]
 #endif
 
-// MARK: - @ChatCompletionsToolArguments Macro Expansion Tests
+// MARK: - @LLMToolArguments Macro Expansion Tests
 
 final class GenerableMacroTests: XCTestCase {
 
-	#if canImport(SwiftChatCompletionsMacrosPlugin)
+	#if canImport(SwiftLLMToolMacrosPlugin)
 
 	func testGenerableWithPrimitiveTypes() throws {
 		assertMacroExpansion(
 			"""
-			@ChatCompletionsToolArguments
+			@LLMToolArguments
 			struct Query {
 				var name: String
 				var age: Int
@@ -44,7 +44,7 @@ final class GenerableMacroTests: XCTestCase {
 			    }
 			}
 
-			extension Query: ChatCompletionsToolArguments, Codable, Sendable {
+			extension Query: LLMToolArguments, Codable, Sendable {
 			}
 			""",
 			macros: testMacros
@@ -54,7 +54,7 @@ final class GenerableMacroTests: XCTestCase {
 	func testGenerableWithOptionalProperty() throws {
 		assertMacroExpansion(
 			"""
-			@ChatCompletionsToolArguments
+			@LLMToolArguments
 			struct Query {
 				var name: String
 				var nickname: String?
@@ -73,7 +73,7 @@ final class GenerableMacroTests: XCTestCase {
 			    }
 			}
 
-			extension Query: ChatCompletionsToolArguments, Codable, Sendable {
+			extension Query: LLMToolArguments, Codable, Sendable {
 			}
 			""",
 			macros: testMacros
@@ -83,9 +83,9 @@ final class GenerableMacroTests: XCTestCase {
 	func testGenerableWithGuideDescription() throws {
 		assertMacroExpansion(
 			"""
-			@ChatCompletionsToolArguments
+			@LLMToolArguments
 			struct Query {
-				@ChatCompletionsToolGuide(description: "The city name")
+				@LLMToolGuide(description: "The city name")
 				var location: String
 			}
 			""",
@@ -101,7 +101,7 @@ final class GenerableMacroTests: XCTestCase {
 			    }
 			}
 
-			extension Query: ChatCompletionsToolArguments, Codable, Sendable {
+			extension Query: LLMToolArguments, Codable, Sendable {
 			}
 			""",
 			macros: testMacros
@@ -111,7 +111,7 @@ final class GenerableMacroTests: XCTestCase {
 	func testGenerableWithArrayType() throws {
 		assertMacroExpansion(
 			"""
-			@ChatCompletionsToolArguments
+			@LLMToolArguments
 			struct Query {
 				var tags: [String]
 			}
@@ -128,7 +128,7 @@ final class GenerableMacroTests: XCTestCase {
 			    }
 			}
 
-			extension Query: ChatCompletionsToolArguments, Codable, Sendable {
+			extension Query: LLMToolArguments, Codable, Sendable {
 			}
 			""",
 			macros: testMacros
@@ -138,7 +138,7 @@ final class GenerableMacroTests: XCTestCase {
 	func testGenerableOnNonStructEmitsError() throws {
 		assertMacroExpansion(
 			"""
-			@ChatCompletionsToolArguments
+			@LLMToolArguments
 			class Query {
 				var name: String = ""
 			}
@@ -150,7 +150,7 @@ final class GenerableMacroTests: XCTestCase {
 			""",
 			diagnostics: [
 				DiagnosticSpec(
-					message: "@ChatCompletionsToolArguments can only be applied to structs",
+					message: "@LLMToolArguments can only be applied to structs",
 					line: 1,
 					column: 1
 				)
@@ -162,9 +162,9 @@ final class GenerableMacroTests: XCTestCase {
 	func testGenerableWithGuideEnumConstraint() throws {
 		assertMacroExpansion(
 			"""
-			@ChatCompletionsToolArguments
+			@LLMToolArguments
 			struct Query {
-				@ChatCompletionsToolGuide(description: "Temperature unit", .anyOf(["celsius", "fahrenheit"]))
+				@LLMToolGuide(description: "Temperature unit", .anyOf(["celsius", "fahrenheit"]))
 				var unit: String
 			}
 			""",
@@ -180,7 +180,7 @@ final class GenerableMacroTests: XCTestCase {
 			    }
 			}
 
-			extension Query: ChatCompletionsToolArguments, Codable, Sendable {
+			extension Query: LLMToolArguments, Codable, Sendable {
 			}
 			""",
 			macros: testMacros
@@ -190,9 +190,9 @@ final class GenerableMacroTests: XCTestCase {
 	func testGenerableWithGuideRangeConstraint() throws {
 		assertMacroExpansion(
 			"""
-			@ChatCompletionsToolArguments
+			@LLMToolArguments
 			struct Query {
-				@ChatCompletionsToolGuide(description: "Number of results", .range(1...100))
+				@LLMToolGuide(description: "Number of results", .range(1...100))
 				var count: Int
 			}
 			""",
@@ -208,7 +208,7 @@ final class GenerableMacroTests: XCTestCase {
 			    }
 			}
 
-			extension Query: ChatCompletionsToolArguments, Codable, Sendable {
+			extension Query: LLMToolArguments, Codable, Sendable {
 			}
 			""",
 			macros: testMacros
@@ -218,9 +218,9 @@ final class GenerableMacroTests: XCTestCase {
 	func testGenerableWithGuideDoubleRangeConstraint() throws {
 		assertMacroExpansion(
 			"""
-			@ChatCompletionsToolArguments
+			@LLMToolArguments
 			struct Query {
-				@ChatCompletionsToolGuide(description: "Temperature value", .doubleRange(0.0...2.0))
+				@LLMToolGuide(description: "Temperature value", .doubleRange(0.0...2.0))
 				var temperature: Double
 			}
 			""",
@@ -236,7 +236,7 @@ final class GenerableMacroTests: XCTestCase {
 			    }
 			}
 
-			extension Query: ChatCompletionsToolArguments, Codable, Sendable {
+			extension Query: LLMToolArguments, Codable, Sendable {
 			}
 			""",
 			macros: testMacros
@@ -246,7 +246,7 @@ final class GenerableMacroTests: XCTestCase {
 	func testGenerableWithNestedGenerable() throws {
 		assertMacroExpansion(
 			"""
-			@ChatCompletionsToolArguments
+			@LLMToolArguments
 			struct Outer {
 				var inner: InnerType
 			}
@@ -263,7 +263,7 @@ final class GenerableMacroTests: XCTestCase {
 			    }
 			}
 
-			extension Outer: ChatCompletionsToolArguments, Codable, Sendable {
+			extension Outer: LLMToolArguments, Codable, Sendable {
 			}
 			""",
 			macros: testMacros
@@ -272,24 +272,24 @@ final class GenerableMacroTests: XCTestCase {
 
 	#else
 	func testMacroNotAvailable() throws {
-		XCTFail("SwiftChatCompletionsMacrosPlugin module not available")
+		XCTFail("SwiftLLMToolMacrosPlugin module not available")
 	}
 	#endif
 }
 
-// MARK: - @ChatCompletionsTool Macro Expansion Tests
+// MARK: - @LLMTool Macro Expansion Tests
 
 final class ToolMacroTests: XCTestCase {
 
-	#if canImport(SwiftChatCompletionsMacrosPlugin)
+	#if canImport(SwiftLLMToolMacrosPlugin)
 
 	func testToolWithNestedArguments() throws {
 		assertMacroExpansion(
 			"""
 			/// Get the current weather for a location.
-			@ChatCompletionsTool
+			@LLMTool
 			struct GetWeather {
-				@ChatCompletionsToolArguments
+				@LLMToolArguments
 				struct Arguments {
 					var location: String
 				}
@@ -330,10 +330,10 @@ final class ToolMacroTests: XCTestCase {
 			    }
 			}
 
-			extension GetWeather.Arguments: ChatCompletionsToolArguments, Codable, Sendable {
+			extension GetWeather.Arguments: LLMToolArguments, Codable, Sendable {
 			}
 
-			extension GetWeather: ChatCompletionsTool {
+			extension GetWeather: LLMTool {
 			}
 			""",
 			macros: testMacros
@@ -343,7 +343,7 @@ final class ToolMacroTests: XCTestCase {
 	func testToolOnNonStructEmitsError() throws {
 		assertMacroExpansion(
 			"""
-			@ChatCompletionsTool
+			@LLMTool
 			class MyTool {
 			}
 			""",
@@ -353,7 +353,7 @@ final class ToolMacroTests: XCTestCase {
 			""",
 			diagnostics: [
 				DiagnosticSpec(
-					message: "@ChatCompletionsTool can only be applied to structs",
+					message: "@LLMTool can only be applied to structs",
 					line: 1,
 					column: 1
 				)
@@ -366,9 +366,9 @@ final class ToolMacroTests: XCTestCase {
 		assertMacroExpansion(
 			"""
 			/// Search the web.
-			@ChatCompletionsTool
+			@LLMTool
 			struct SearchWebResults {
-				@ChatCompletionsToolArguments
+				@LLMToolArguments
 				struct Arguments {
 					var query: String
 				}
@@ -409,10 +409,10 @@ final class ToolMacroTests: XCTestCase {
 			    }
 			}
 
-			extension SearchWebResults.Arguments: ChatCompletionsToolArguments, Codable, Sendable {
+			extension SearchWebResults.Arguments: LLMToolArguments, Codable, Sendable {
 			}
 
-			extension SearchWebResults: ChatCompletionsTool {
+			extension SearchWebResults: LLMTool {
 			}
 			""",
 			macros: testMacros
@@ -421,21 +421,21 @@ final class ToolMacroTests: XCTestCase {
 
 	#else
 	func testMacroNotAvailable() throws {
-		XCTFail("SwiftChatCompletionsMacrosPlugin module not available")
+		XCTFail("SwiftLLMToolMacrosPlugin module not available")
 	}
 	#endif
 }
 
-// MARK: - @ChatCompletionsToolGuide Macro Expansion Tests
+// MARK: - @LLMToolGuide Macro Expansion Tests
 
 final class GuideMacroTests: XCTestCase {
 
-	#if canImport(SwiftChatCompletionsMacrosPlugin)
+	#if canImport(SwiftLLMToolMacrosPlugin)
 
 	func testGuideIsMarkerMacro() throws {
 		assertMacroExpansion(
 			"""
-			@ChatCompletionsToolGuide(description: "A test description")
+			@LLMToolGuide(description: "A test description")
 			var name: String
 			""",
 			expandedSource: """
@@ -447,7 +447,7 @@ final class GuideMacroTests: XCTestCase {
 
 	#else
 	func testMacroNotAvailable() throws {
-		XCTFail("SwiftChatCompletionsMacrosPlugin module not available")
+		XCTFail("SwiftLLMToolMacrosPlugin module not available")
 	}
 	#endif
 }

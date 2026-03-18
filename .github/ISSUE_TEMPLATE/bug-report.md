@@ -1,6 +1,6 @@
 ---
 name: Bug Report
-about: Report a bug in SwiftChatCompletionsMacros
+about: Report a bug in SwiftLLMToolMacros
 title: ''
 labels: bug
 ---

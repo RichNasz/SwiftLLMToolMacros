@@ -17,8 +17,8 @@ extension GenerableMacro: MemberMacro {
 			context.diagnose(.init(
 				node: node,
 				message: DiagnosticMessage(
-					message: "@ChatCompletionsToolArguments can only be applied to structs",
-					diagnosticID: .init(domain: "SwiftChatCompletionsMacros", id: "notAStruct"),
+					message: "@LLMToolArguments can only be applied to structs",
+					diagnosticID: .init(domain: "SwiftLLMToolMacros", id: "notAStruct"),
 					severity: .error
 				)
 			))
@@ -68,7 +68,7 @@ extension GenerableMacro: ExtensionMacro {
 		}
 
 		let ext: DeclSyntax = """
-			extension \(type.trimmed): ChatCompletionsToolArguments, Codable, Sendable {}
+			extension \(type.trimmed): LLMToolArguments, Codable, Sendable {}
 			"""
 		return [ext.cast(ExtensionDeclSyntax.self)]
 	}
@@ -151,7 +151,7 @@ private func extractGuide(from attributes: AttributeListSyntax) -> (String?, Con
 	for attribute in attributes {
 		guard let attr = attribute.as(AttributeSyntax.self),
 			  let identType = attr.attributeName.as(IdentifierTypeSyntax.self),
-			  identType.name.text == "ChatCompletionsToolGuide",
+			  identType.name.text == "LLMToolGuide",
 			  let arguments = attr.arguments?.as(LabeledExprListSyntax.self)
 		else {
 			continue
@@ -286,7 +286,7 @@ private func typeToSchemaExpression(_ typeName: String, description: String? = n
 			let itemSchema = typeToSchemaExpression(elementType)
 			return ".array(items: \(itemSchema))"
 		}
-		// Nested ChatCompletionsToolArguments type — delegate to its jsonSchema
+		// Nested LLMToolArguments type — delegate to its jsonSchema
 		return "\(typeName).jsonSchema"
 	}
 }

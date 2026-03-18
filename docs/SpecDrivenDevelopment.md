@@ -1,10 +1,10 @@
-# Spec-Driven Development with SwiftChatCompletionsMacros
+# Spec-Driven Development with SwiftLLMToolMacros
 
 ## What Is Spec-Driven Development?
 
 Spec-driven development (SDD) is a workflow where you write specifications before code. You describe what a tool should do (WHAT spec) and how to implement it (HOW spec), then hand the specs to an AI coding agent to generate the implementation.
 
-SDD is entirely optional. You can use SwiftChatCompletionsMacros without writing any specs. But if you use an AI coding agent, specs reduce back-and-forth and produce more accurate results on the first pass.
+SDD is entirely optional. You can use SwiftLLMToolMacros without writing any specs. But if you use an AI coding agent, specs reduce back-and-forth and produce more accurate results on the first pass.
 
 ## The Three Tools
 
@@ -20,13 +20,13 @@ Write a WHAT spec when you are defining a new tool or changing what an existing 
 
 A HOW spec translates WHAT requirements into technical decisions. It names the specific macros to use, defines struct layout and annotation placement, specifies component ordering, and shows the expected JSON Schema output.
 
-A HOW spec gives the AI agent enough detail to generate code without ambiguity. It answers: *how should this be built using SwiftChatCompletionsMacros?*
+A HOW spec gives the AI agent enough detail to generate code without ambiguity. It answers: *how should this be built using SwiftLLMToolMacros?*
 
 Write a HOW spec after the WHAT spec is settled, before asking an agent to generate code.
 
 ### Agent Skills -- Provide Package Knowledge
 
-An [Agent Skill](https://agentskills.io) gives the AI coding agent domain-specific knowledge about a package's API. The SwiftChatCompletionsMacros skill teaches the agent:
+An [Agent Skill](https://agentskills.io) gives the AI coding agent domain-specific knowledge about a package's API. The SwiftLLMToolMacros skill teaches the agent:
 
 - The three macros and what each generates
 - Type-to-schema mapping rules
@@ -64,7 +64,7 @@ You write code manually using the [README](../README.md) and [Examples](../Examp
 
 ## Getting Started
 
-1. **Install the Agent Skill** (optional) -- copy `skills/using-swift-chat-completions-macros/` into your project's `skills/` directory. See the [README](../README.md#installing-the-skill) for details.
+1. **Install the Agent Skill** (optional) -- copy `skills/using-swift-llm-tool-macros/` into your project's `skills/` directory. See the [README](../README.md#installing-the-skill) for details.
 
 2. **Write a WHAT spec** -- describe the tool, its arguments, types, constraints, and acceptance criteria. See [`Examples/Specs/RecipeSearchTool-WHAT.md`](../Examples/Specs/RecipeSearchTool-WHAT.md) for a template.
 
@@ -77,4 +77,4 @@ You write code manually using the [README](../README.md) and [Examples](../Examp
 See the complete worked example in [`Examples/Specs/`](../Examples/Specs/):
 
 - [RecipeSearchTool-WHAT.md](../Examples/Specs/RecipeSearchTool-WHAT.md) -- Product requirements for a recipe search tool
-- [RecipeSearchTool-HOW.md](../Examples/Specs/RecipeSearchTool-HOW.md) -- Implementation guidance using SwiftChatCompletionsMacros
+- [RecipeSearchTool-HOW.md](../Examples/Specs/RecipeSearchTool-HOW.md) -- Implementation guidance using SwiftLLMToolMacros

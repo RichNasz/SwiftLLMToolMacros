@@ -31,6 +31,6 @@ The `ToolDefinition` type encodes to `{"type":"function","function":{...}}` — 
 
 The macros were originally named `@Tool`, `@Generable`, and `@Guide` to mirror Apple's FoundationModels framework (introduced in iOS 26 / macOS 26). They were renamed to `@ChatCompletionsTool`, `@ChatCompletionsToolArguments`, and `@ChatCompletionsToolGuide` to avoid conflicts with Apple's FoundationModels macros while maintaining semantic clarity. The `ChatCompletionsTool` prefix makes the macros' purpose self-documenting and eliminates naming collisions when both packages are imported. This means:
 
-- Developers can import both FoundationModels and SwiftChatCompletionsMacros without name conflicts
+- Developers can import both FoundationModels and SwiftLLMToolMacros without name conflicts
 - The macro names clearly communicate their purpose — generating definitions for OpenAI-compatible chat completions tool calling
 - The protocol shapes still mirror FoundationModels conventions, so developers familiar with that framework can transfer their knowledge with minimal friction

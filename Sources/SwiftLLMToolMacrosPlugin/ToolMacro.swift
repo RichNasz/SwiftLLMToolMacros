@@ -18,8 +18,8 @@ extension ToolMacro: MemberMacro {
 			context.diagnose(.init(
 				node: node,
 				message: DiagnosticMessage(
-					message: "@ChatCompletionsTool can only be applied to structs",
-					diagnosticID: MessageID(domain: "SwiftChatCompletionsMacros", id: "toolNotAStruct"),
+					message: "@LLMTool can only be applied to structs",
+					diagnosticID: MessageID(domain: "SwiftLLMToolMacros", id: "toolNotAStruct"),
 					severity: .error
 				)
 			))
@@ -98,7 +98,7 @@ extension ToolMacro: ExtensionMacro {
 		}
 
 		let ext: DeclSyntax = """
-			extension \(type.trimmed): ChatCompletionsTool {}
+			extension \(type.trimmed): LLMTool {}
 			"""
 		return [ext.cast(ExtensionDeclSyntax.self)]
 	}

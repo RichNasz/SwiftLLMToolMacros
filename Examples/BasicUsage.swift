@@ -1,35 +1,35 @@
 // BasicUsage.swift
-// Examples of using SwiftChatCompletionsMacros
+// Examples of using SwiftLLMToolMacros
 //
 // NOTE: This file is for documentation purposes and is not compiled as part of
-// the package. To use these examples, add SwiftChatCompletionsMacros as a
+// the package. To use these examples, add SwiftLLMToolMacros as a
 // dependency to your project.
 
-import SwiftChatCompletionsMacros
+import SwiftLLMToolMacros
 
-// MARK: - Define Structured Arguments with @ChatCompletionsToolArguments
+// MARK: - Define Structured Arguments with @LLMToolArguments
 
-/// Use @ChatCompletionsToolArguments to define a struct whose properties map to a JSON Schema.
+/// Use @LLMToolArguments to define a struct whose properties map to a JSON Schema.
 /// Each stored property becomes a schema property. Optional properties are
 /// excluded from the "required" array.
-@ChatCompletionsToolArguments
+@LLMToolArguments
 struct WeatherQuery {
-	@ChatCompletionsToolGuide(description: "The city to get weather for")
+	@LLMToolGuide(description: "The city to get weather for")
 	var location: String
 
-	@ChatCompletionsToolGuide(description: "Temperature unit", .anyOf(["celsius", "fahrenheit"]))
+	@LLMToolGuide(description: "Temperature unit", .anyOf(["celsius", "fahrenheit"]))
 	var unit: String?
 }
 
-// MARK: - Define a Tool with @ChatCompletionsTool
+// MARK: - Define a Tool with @LLMTool
 
-/// Use @ChatCompletionsTool on a struct to generate an OpenAI-compatible tool definition.
+/// Use @LLMTool on a struct to generate an OpenAI-compatible tool definition.
 /// The struct needs:
-/// 1. A nested `Arguments` type (or typealias) conforming to `ChatCompletionsToolArguments`
+/// 1. A nested `Arguments` type (or typealias) conforming to `LLMToolArguments`
 /// 2. A `call(arguments:)` method returning `ToolOutput`
 
 /// Get the current weather for a location.
-@ChatCompletionsTool
+@LLMTool
 struct GetWeather {
 	typealias Arguments = WeatherQuery
 
@@ -79,23 +79,23 @@ func example() throws {
 	print(json)
 }
 
-// MARK: - Nested @ChatCompletionsToolArguments Types
+// MARK: - Nested @LLMToolArguments Types
 
-@ChatCompletionsToolArguments
+@LLMToolArguments
 struct Address {
-	@ChatCompletionsToolGuide(description: "Street address")
+	@LLMToolGuide(description: "Street address")
 	var street: String
 
-	@ChatCompletionsToolGuide(description: "City name")
+	@LLMToolGuide(description: "City name")
 	var city: String
 
-	@ChatCompletionsToolGuide(description: "ZIP code")
+	@LLMToolGuide(description: "ZIP code")
 	var zip: String
 }
 
-@ChatCompletionsToolArguments
+@LLMToolArguments
 struct ShippingRequest {
-	@ChatCompletionsToolGuide(description: "Customer full name")
+	@LLMToolGuide(description: "Customer full name")
 	var name: String
 
 	var address: Address
@@ -106,14 +106,14 @@ struct ShippingRequest {
 // MARK: - Multiple Tools
 
 /// Search the web for information.
-@ChatCompletionsTool
+@LLMTool
 struct SearchWeb {
-	@ChatCompletionsToolArguments
+	@LLMToolArguments
 	struct Arguments {
-		@ChatCompletionsToolGuide(description: "The search query")
+		@LLMToolGuide(description: "The search query")
 		var query: String
 
-		@ChatCompletionsToolGuide(description: "Maximum number of results", .range(1...10))
+		@LLMToolGuide(description: "Maximum number of results", .range(1...10))
 		var maxResults: Int
 	}
 
@@ -123,17 +123,17 @@ struct SearchWeb {
 }
 
 /// Send an email to a recipient.
-@ChatCompletionsTool
+@LLMTool
 struct SendEmail {
-	@ChatCompletionsToolArguments
+	@LLMToolArguments
 	struct Arguments {
-		@ChatCompletionsToolGuide(description: "Recipient email address")
+		@LLMToolGuide(description: "Recipient email address")
 		var to: String
 
-		@ChatCompletionsToolGuide(description: "Email subject line")
+		@LLMToolGuide(description: "Email subject line")
 		var subject: String
 
-		@ChatCompletionsToolGuide(description: "Email body text")
+		@LLMToolGuide(description: "Email body text")
 		var body: String
 	}
 

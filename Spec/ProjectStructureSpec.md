@@ -3,7 +3,7 @@
 ## Directory Layout
 
 ```
-SwiftChatCompletionsMacros/
+SwiftLLMToolMacros/
 ├── Package.swift                         # SPM manifest
 ├── README.md                             # User-facing documentation
 ├── CLAUDE.md                             # AI assistant context
@@ -18,25 +18,25 @@ SwiftChatCompletionsMacros/
 │   └── pull_request_template.md          # PR checklist
 ├── Spec/                                    # Source of truth for AI code generation
 │   ├── README.md                         # Spec index and philosophy
-│   ├── SwiftChatCompletionsMacros.md     # Core product spec (WHAT + HOW)
+│   ├── SwiftLLMToolMacros.md     # Core product spec (WHAT + HOW)
 │   ├── DesignRationale.md                # Design decisions (WHY)
 │   ├── DocumentationSpec.md              # Documentation rules
 │   ├── ContributingSpec.md               # Contribution standards
 │   ├── ProjectStructureSpec.md           # This file
 │   └── TestingSpec.md                    # Testing philosophy
 ├── Sources/
-│   ├── SwiftChatCompletionsMacros/       # Public API (library target)
+│   ├── SwiftLLMToolMacros/       # Public API (library target)
 │   │   ├── Macros.swift                  # @ChatCompletionsTool, @ChatCompletionsToolArguments, @ChatCompletionsToolGuide declarations
 │   │   ├── Protocols.swift               # ChatCompletionsToolArguments, ChatCompletionsTool protocols
 │   │   └── Types.swift                   # JSONSchemaValue, ToolDefinition, etc.
-│   └── SwiftChatCompletionsMacrosPlugin/ # Compiler plugin (macro target)
+│   └── SwiftLLMToolMacrosPlugin/ # Compiler plugin (macro target)
 │       ├── Plugin.swift                  # CompilerPlugin entry point
 │       ├── GenerableMacro.swift          # @ChatCompletionsToolArguments schema generation
 │       ├── ToolMacro.swift               # @ChatCompletionsTool definition generation
 │       └── GuideMacro.swift              # @ChatCompletionsToolGuide marker macro
 ├── Tests/
-│   └── SwiftChatCompletionsMacrosTests/
-│       ├── SwiftChatCompletionsMacrosTests.swift  # Macro expansion tests (XCTest)
+│   └── SwiftLLMToolMacrosTests/
+│       ├── SwiftLLMToolMacrosTests.swift  # Macro expansion tests (XCTest)
 │       └── RuntimeTypeTests.swift                 # Runtime type tests (Swift Testing)
 ├── Examples/
 │   ├── BasicUsage.swift                  # Compilable usage examples
@@ -46,7 +46,7 @@ SwiftChatCompletionsMacros/
 ├── docs/
 │   └── SpecDrivenDevelopment.md          # SDD workflow guide (WHAT + HOW + Skill harmony)
 └── skills/
-    └── using-swift-chat-completions-macros/
+    └── using-swift-llm-tool-macros/
         └── SKILL.md                      # Agent Skill for AI coding assistants
 ```
 
@@ -54,19 +54,19 @@ SwiftChatCompletionsMacros/
 
 The project uses three SPM targets, following Swift macro conventions established by SE-0382 (Expression Macros) and SE-0389 (Attached Macros):
 
-### 1. SwiftChatCompletionsMacros (library)
+### 1. SwiftLLMToolMacros (library)
 
 The public API that users import. Contains macro declarations, protocols, and types. This target has no dependency on swift-syntax — it is lightweight and compiles quickly for downstream consumers.
 
 **Why separate**: Users should not need to compile swift-syntax into their application. The library target contains only the declarations and runtime types. The macro implementations live in the plugin target, which the compiler loads separately.
 
-### 2. SwiftChatCompletionsMacrosPlugin (macro)
+### 2. SwiftLLMToolMacrosPlugin (macro)
 
 The compiler plugin containing macro implementations. Depends on swift-syntax for AST parsing and code generation. Loaded by the Swift compiler at build time, not linked into user applications.
 
 **Why separate**: SE-0382 requires macro implementations to live in a separate executable target. This also keeps the heavy swift-syntax dependency out of user code.
 
-### 3. SwiftChatCompletionsMacrosTests (test)
+### 3. SwiftLLMToolMacrosTests (test)
 
 Tests for both macro expansion correctness and runtime type behavior. Uses two testing frameworks (see TestingSpec.md for rationale).
 

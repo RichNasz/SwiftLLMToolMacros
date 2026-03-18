@@ -1,6 +1,6 @@
 # Spec Directory
 
-This directory contains the specification files for SwiftChatCompletionsMacros. Specs are the **source of truth for AI code generation**. When the product needs to change, specs change first, then AI generates the corresponding code.
+This directory contains the specification files for SwiftLLMToolMacros. Specs are the **source of truth for AI code generation**. When the product needs to change, specs change first, then AI generates the corresponding code.
 
 ## Spec Types
 
@@ -14,7 +14,7 @@ Specs are organized into three categories:
 
 | File | Type | Purpose |
 |---|---|---|
-| [SwiftChatCompletionsMacros.md](SwiftChatCompletionsMacros.md) | WHAT + HOW | Core product specification and technical design |
+| [SwiftLLMToolMacros.md](SwiftLLMToolMacros.md) | WHAT + HOW | Core product specification and technical design |
 | [DesignRationale.md](DesignRationale.md) | WHY | Design rationale and decision history |
 | [DocumentationSpec.md](DocumentationSpec.md) | WHAT | Rules for README, CLAUDE.md, examples, and community files |
 | [ContributingSpec.md](ContributingSpec.md) | WHAT | Contribution standards, commit conventions, PR process, Code of Conduct |

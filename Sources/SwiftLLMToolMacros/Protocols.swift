@@ -1,21 +1,21 @@
 /// A type whose structure can be described as a JSON Schema for use with
-/// OpenAI-compatible chat completions endpoints.
+/// LLM tool-calling endpoints.
 ///
-/// Conformance is synthesized by the `@ChatCompletionsToolArguments` macro,
+/// Conformance is synthesized by the `@LLMToolArguments` macro,
 /// which generates the `jsonSchema` property at compile time.
-public protocol ChatCompletionsToolArguments: Codable, Sendable {
+public protocol LLMToolArguments: Codable, Sendable {
 	/// The JSON Schema describing this type's structure.
 	static var jsonSchema: JSONSchemaValue { get }
 }
 
-/// A callable tool that can be used with OpenAI-compatible chat completions
-/// endpoints for function calling.
+/// A callable tool that can be used with LLM tool-calling endpoints
+/// for function calling.
 ///
-/// Conformance is synthesized by the `@ChatCompletionsTool` macro, which
+/// Conformance is synthesized by the `@LLMTool` macro, which
 /// generates the `toolDefinition` property at compile time.
-public protocol ChatCompletionsTool: Sendable {
-	/// The arguments type, which must conform to `ChatCompletionsToolArguments`.
-	associatedtype Arguments: ChatCompletionsToolArguments
+public protocol LLMTool: Sendable {
+	/// The arguments type, which must conform to `LLMToolArguments`.
+	associatedtype Arguments: LLMToolArguments
 
 	/// The snake_case name derived from the struct name.
 	static var name: String { get }

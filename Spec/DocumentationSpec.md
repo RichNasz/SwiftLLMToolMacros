@@ -65,7 +65,7 @@ The Quick Start code example must:
 
 ### Quality Standard
 
-CLAUDE.md is the AI's entry point to the codebase. It should contain enough context for AI to navigate the project, understand the architecture, and generate correct code. It should reference spec files as authoritative sources for detailed design decisions. Implementation context belongs in HOW specs; CLAUDE.md should direct AI to consult `Spec/SwiftChatCompletionsMacros.md` for technical design details.
+CLAUDE.md is the AI's entry point to the codebase. It should contain enough context for AI to navigate the project, understand the architecture, and generate correct code. It should reference spec files as authoritative sources for detailed design decisions. Implementation context belongs in HOW specs; CLAUDE.md should direct AI to consult `Spec/SwiftLLMToolMacros.md` for technical design details.
 
 ## Examples/BasicUsage.swift
 
@@ -83,11 +83,11 @@ The example file must show:
 
 ```swift
 // BasicUsage.swift
-// Examples of SwiftChatCompletionsMacros usage
+// Examples of SwiftLLMToolMacros usage
 //
 // This file demonstrates the core macros and types.
 // All examples should compile when imported into a project
-// that depends on SwiftChatCompletionsMacros.
+// that depends on SwiftLLMToolMacros.
 ```
 
 ## CONTRIBUTING.md
@@ -149,9 +149,9 @@ Required sections:
 
 ## Agent Skill
 
-### `skills/using-swift-chat-completions-macros/SKILL.md`
+### `skills/using-swift-llm-tool-macros/SKILL.md`
 
-An [Agent Skill](https://agentskills.io) that gives AI coding assistants package-specific context for using SwiftChatCompletionsMacros.
+An [Agent Skill](https://agentskills.io) that gives AI coding assistants package-specific context for using SwiftLLMToolMacros.
 
 ### Required Content
 
@@ -205,7 +205,7 @@ The README's "Agent Skill" section must:
 
 ### Purpose
 
-Sample WHAT and HOW specs demonstrating how a package consumer would use spec-driven development to build a tool using SwiftChatCompletionsMacros.
+Sample WHAT and HOW specs demonstrating how a package consumer would use spec-driven development to build a tool using SwiftLLMToolMacros.
 
 ### Required Files
 
@@ -221,7 +221,7 @@ Sample WHAT and HOW specs demonstrating how a package consumer would use spec-dr
 
 ### HOW Spec Requirements
 
-- Must reference SwiftChatCompletionsMacros by import name
+- Must reference SwiftLLMToolMacros by import name
 - Must name specific macros (`@ChatCompletionsToolArguments`, `@ChatCompletionsTool`, `@ChatCompletionsToolGuide`)
 - Must show expected JSON Schema output shape
 - Must cover component ordering (nested type defined before referencing type)

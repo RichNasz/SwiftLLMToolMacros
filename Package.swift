@@ -5,15 +5,15 @@ import PackageDescription
 import CompilerPluginSupport
 
 let package = Package(
-	name: "SwiftChatCompletionsMacros",
+	name: "SwiftLLMToolMacros",
 	platforms: [
 		.macOS(.v13),
 		.iOS(.v16)
 	],
 	products: [
 		.library(
-			name: "SwiftChatCompletionsMacros",
-			targets: ["SwiftChatCompletionsMacros"]
+			name: "SwiftLLMToolMacros",
+			targets: ["SwiftLLMToolMacros"]
 		),
 	],
 	dependencies: [
@@ -22,7 +22,7 @@ let package = Package(
 	targets: [
 		// Macro implementation that performs the source transformation of a macro.
 		.macro(
-			name: "SwiftChatCompletionsMacrosPlugin",
+			name: "SwiftLLMToolMacrosPlugin",
 			dependencies: [
 				.product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
 				.product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
@@ -31,16 +31,16 @@ let package = Package(
 
 		// Library that exposes macros as part of its API, which is used in client programs.
 		.target(
-			name: "SwiftChatCompletionsMacros",
-			dependencies: ["SwiftChatCompletionsMacrosPlugin"]
+			name: "SwiftLLMToolMacros",
+			dependencies: ["SwiftLLMToolMacrosPlugin"]
 		),
 
 		// A test target used to develop the macro implementation.
 		.testTarget(
-			name: "SwiftChatCompletionsMacrosTests",
+			name: "SwiftLLMToolMacrosTests",
 			dependencies: [
-				"SwiftChatCompletionsMacros",
-				"SwiftChatCompletionsMacrosPlugin",
+				"SwiftLLMToolMacros",
+				"SwiftLLMToolMacrosPlugin",
 				.product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
 			]
 		),

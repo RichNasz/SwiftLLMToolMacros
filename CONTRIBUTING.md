@@ -1,6 +1,6 @@
-# Contributing to SwiftChatCompletionsMacros
+# Contributing to SwiftLLMToolMacros
 
-Thank you for your interest in contributing to SwiftChatCompletionsMacros!
+Thank you for your interest in contributing to SwiftLLMToolMacros!
 
 ## Getting Started
 

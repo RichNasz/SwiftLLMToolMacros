@@ -2,7 +2,7 @@
 
 ## Purpose
 
-A tool that lets an LLM search a recipe database by query text, dietary restrictions, ingredient filters, and nutrition criteria. Demonstrates every SwiftChatCompletionsMacros type and constraint category.
+A tool that lets an LLM search a recipe database by query text, dietary restrictions, ingredient filters, and nutrition criteria. Demonstrates every SwiftLLMToolMacros type and constraint category.
 
 ## Tool: RecipeSearch
 

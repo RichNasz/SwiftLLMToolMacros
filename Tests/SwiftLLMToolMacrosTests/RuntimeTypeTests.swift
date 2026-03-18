@@ -1,7 +1,7 @@
 import Foundation
 import Testing
 
-@testable import SwiftChatCompletionsMacros
+@testable import SwiftLLMToolMacros
 
 // MARK: - JSONSchemaValue Encoding Tests
 

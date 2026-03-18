@@ -2,12 +2,12 @@
 
 ## Implementation Target
 
-A single Swift file (`RecipeSearchTool.swift`) using SwiftChatCompletionsMacros.
+A single Swift file (`RecipeSearchTool.swift`) using SwiftLLMToolMacros.
 
 ## Dependencies
 
 ```swift
-import SwiftChatCompletionsMacros
+import SwiftLLMToolMacros
 ```
 
 ## Component Design
