@@ -111,6 +111,7 @@ Signature: `@ChatCompletionsToolGuide(description: String, _ constraint: GuideCo
 | `T?` | Same schema as `T` | No |
 | `[T]` | `{"type": "array", "items": ...}` | Yes |
 | Nested `@ChatCompletionsToolArguments` | Delegates to nested type's `jsonSchema` | Yes |
+| `.null` (JSONSchemaValue) | `{"type": "null"}` | Yes |
 
 ## GuideConstraint Reference
 

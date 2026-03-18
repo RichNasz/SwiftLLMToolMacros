@@ -132,6 +132,7 @@ extension WeatherQuery: ChatCompletionsToolArguments, Codable, Sendable {}
 | `T?` | Same as `T` | No |
 | `[T]` | `{"type": "array", "items": ...}` | Yes |
 | Nested `@ChatCompletionsToolArguments` | `{"type": "object", ...}` | Yes |
+| `.null` (JSONSchemaValue) | `{"type": "null"}` | Yes |
 
 ## `@ChatCompletionsToolGuide` Constraints
 

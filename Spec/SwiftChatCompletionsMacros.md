@@ -43,6 +43,7 @@ public indirect enum JSONSchemaValue: Sendable, Equatable, Encodable {
     case integer(description: String? = nil, minimum: Int? = nil, maximum: Int? = nil)
     case number(description: String? = nil, minimum: Double? = nil, maximum: Double? = nil)
     case boolean(description: String? = nil)
+    case null
 }
 ```
 

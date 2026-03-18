@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+
+### Added
+- `JSONSchemaValue.null` case for representing `{"type": "null"}` in JSON Schema
+
 ## [0.1.0] - 2026-03-02
 
 ### Added

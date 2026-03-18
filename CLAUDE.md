@@ -49,6 +49,7 @@ SwiftChatCompletionsMacros is a Swift Package Manager project that provides comp
 | `T?` | Same schema, excluded from `required` |
 | `[T]` | `{"type": "array", "items": ...}` |
 | Nested `@ChatCompletionsToolArguments` | Delegates to nested type's `jsonSchema` |
+| `.null` (JSONSchemaValue) | `{"type": "null"}` |
 
 ## Dependencies
 
@@ -77,9 +78,18 @@ Tests/
     SwiftChatCompletionsMacrosTests.swift  # Macro expansion tests
     RuntimeTypeTests.swift                 # Runtime type tests
 Examples/
+  BasicUsage.swift                        # Compilable usage examples
   Specs/
     RecipeSearchTool-WHAT.md              # Sample WHAT spec for package consumers
     RecipeSearchTool-HOW.md               # Sample HOW spec for package consumers
+Spec/
+  README.md                               # Spec index and philosophy
+  SwiftChatCompletionsMacros.md           # Core product spec (WHAT + HOW)
+  DesignRationale.md                      # Design decisions (WHY)
+  DocumentationSpec.md                    # Documentation rules
+  ContributingSpec.md                     # Contribution standards
+  ProjectStructureSpec.md                 # Directory layout and placement rules
+  TestingSpec.md                          # Testing philosophy
 docs/
   SpecDrivenDevelopment.md                # SDD workflow guide (WHAT + HOW + Skill harmony)
 skills/
