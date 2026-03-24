@@ -215,5 +215,5 @@ struct SearchRecipes {
 
 This skill covers macro-annotated Swift code only. For wiring the resulting tool into a request pipeline, consult the skill for the DSL you are using:
 
-- **SwiftChatCompletionsDSL** — for OpenAI-compatible chat completions (`/v1/chat/completions`)
-- **SwiftOpenResponsesDSL** — for the OpenAI Responses API (`/v1/responses`)
+- **SwiftChatCompletionsDSL** — consult the `using-swift-chat-completions-dsl` skill for OpenAI-compatible chat completions (`/v1/chat/completions`)
+- **SwiftOpenResponsesDSL** — consult the `using-swift-open-responses-dsl` skill for the OpenAI Responses API (`/v1/responses`)
