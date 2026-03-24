@@ -1,9 +1,9 @@
 // BasicUsage.swift
-// Examples of using SwiftLLMToolMacros
+// Examples of SwiftLLMToolMacros usage
 //
-// NOTE: This file is for documentation purposes and is not compiled as part of
-// the package. To use these examples, add SwiftLLMToolMacros as a
-// dependency to your project.
+// This file demonstrates the core macros and types.
+// All examples should compile when imported into a project
+// that depends on SwiftLLMToolMacros.
 
 import SwiftLLMToolMacros
 

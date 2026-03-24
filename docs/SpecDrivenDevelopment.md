@@ -26,16 +26,24 @@ Write a HOW spec after the WHAT spec is settled, before asking an agent to gener
 
 ### Agent Skills -- Provide Package Knowledge
 
-An [Agent Skill](https://agentskills.io) gives the AI coding agent domain-specific knowledge about a package's API. The SwiftLLMToolMacros skill teaches the agent:
+[Agent Skills](https://agentskills.io) give the AI coding agent domain-specific knowledge about a package. SwiftLLMToolMacros ships two complementary skills:
+
+**`using-swift-llm-tool-macros`** (reference skill) teaches the agent what the package provides:
 
 - The three macros and what each generates
 - Type-to-schema mapping rules
 - `@LLMToolGuide` constraint options
 - Common pitfalls (struct-only restriction, doc comment requirements, argument resolution)
 
-Without the skill, the agent relies on its general training, which may be outdated or incomplete for this package. With the skill, the agent knows the current API surface.
+**`design-llm-tool`** (process skill) teaches the agent how to generate correct code:
 
-See the [README](../README.md#installing-the-skill) for installation instructions.
+- A 7-step decision workflow: name, types, required/optional, constraints, structure, nesting, assembly
+- Explicit decision rules for each choice (not just options, but when to use each)
+- Where macro code ends and DSL integration begins
+
+Without the skills, the agent relies on general training, which may be outdated or incomplete. With both skills loaded, the agent knows the current API surface and the correct design process.
+
+See the [README](../README.md#installing-the-skills) for installation instructions.
 
 ## How They Work Together
 

@@ -197,10 +197,11 @@ The SKILL.md must include:
 
 The README's "Agent Skill" section must:
 
-- State that the skill is optional and not required to use the package
+- State that skills are optional and not required to use the package
 - Note that only agents implementing the [agentskills.io](https://agentskills.io) spec can use skills
-- Explain that adding an SPM dependency does not make the skill discoverable — SPM downloads sources into `.build/checkouts/`, which agents don't scan
-- Provide installation instructions: copy the skill folder into the project's `skills/` directory (or wherever the agent is configured to look)
+- List every skill in the `skills/` directory by name with its role (reference vs process) — a table is preferred
+- Explain that adding an SPM dependency does not make skills discoverable — SPM downloads sources into `.build/checkouts/`, which agents don't scan
+- Provide individual install commands for each skill (one `cp` per skill directory)
 - Include a "Spec-Driven Development" subsection linking to `docs/SpecDrivenDevelopment.md` and `Examples/Specs/`
 
 ## docs/SpecDrivenDevelopment.md

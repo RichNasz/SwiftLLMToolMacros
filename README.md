@@ -190,24 +190,29 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ## Agent Skill
 
-This project includes an [Agent Skill](https://agentskills.io) at [`skills/using-swift-llm-tool-macros/SKILL.md`](skills/using-swift-llm-tool-macros/SKILL.md) that gives AI coding assistants package-specific context for using the macros correctly.
+This project includes two [Agent Skills](https://agentskills.io) for AI coding assistants. Both are optional — the macros work the same with or without them. Skills are only useful if you use an agent that implements the [agentskills.io](https://agentskills.io) specification (Claude Code, Cursor, Gemini CLI, etc.).
 
-**This is entirely optional.** Agent Skills are only useful if you use an AI coding agent that implements the [agentskills.io](https://agentskills.io) specification (Claude Code, Cursor, Gemini CLI, etc.). The macros work the same with or without the skill installed.
+| Skill | Role | Path |
+|---|---|---|
+| `using-swift-llm-tool-macros` | Reference: macro API, type mapping, constraints, pitfalls | [`skills/using-swift-llm-tool-macros/SKILL.md`](skills/using-swift-llm-tool-macros/SKILL.md) |
+| `design-llm-tool` | Process: step-by-step workflow for designing a tool from a description | [`skills/design-llm-tool/SKILL.md`](skills/design-llm-tool/SKILL.md) |
 
-### Installing the Skill
+### Installing the Skills
 
-Adding SwiftLLMToolMacros as an SPM dependency does **not** make the skill available to your agent -- SPM downloads sources into `.build/checkouts/`, which agents don't scan. To install the skill, copy the folder into a location your agent is configured to discover:
+Adding SwiftLLMToolMacros as an SPM dependency does **not** make the skills available to your agent -- SPM downloads sources into `.build/checkouts/`, which agents don't scan. To install the skills, copy the folders into a location your agent is configured to discover:
 
 ```bash
 cp -r .build/checkouts/SwiftLLMToolMacros/skills/using-swift-llm-tool-macros \
       skills/using-swift-llm-tool-macros
+cp -r .build/checkouts/SwiftLLMToolMacros/skills/design-llm-tool \
+      skills/design-llm-tool
 ```
 
-This places the skill in your project's `skills/` directory, where compatible agents will find it automatically.
+This places both skills in your project's `skills/` directory, where compatible agents will find them automatically. Install one or both depending on your workflow.
 
 ### Spec-Driven Development
 
-If you use AI coding agents, you can pair the Agent Skill with WHAT and HOW specs to define tools before generating code. See the [Spec-Driven Development Guide](docs/SpecDrivenDevelopment.md) for the workflow and [`Examples/Specs/`](Examples/Specs/) for sample specs you can use as templates.
+If you use AI coding agents, you can pair the Agent Skills with WHAT and HOW specs to define tools before generating code. See the [Spec-Driven Development Guide](docs/SpecDrivenDevelopment.md) for the workflow and [`Examples/Specs/`](Examples/Specs/) for sample specs you can use as templates.
 
 ## Attribution
 
