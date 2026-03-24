@@ -93,8 +93,10 @@ Spec/
 docs/
   SpecDrivenDevelopment.md                # SDD workflow guide (WHAT + HOW + Skill harmony)
 skills/
-  using-swift-chat-completions-macros/
-    SKILL.md                              # Agent Skill for AI coding assistants
+  using-swift-llm-tool-macros/
+    SKILL.md                              # Reference skill: macro API surface
+  design-llm-tool/
+    SKILL.md                              # Process skill: tool design workflow
 ```
 
 ## Claude Code Files

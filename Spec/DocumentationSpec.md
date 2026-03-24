@@ -173,6 +173,26 @@ The SKILL.md must include:
 - No reference files — the API surface fits within the SKILL.md itself
 - Only covers package-specific knowledge; assumes the agent already knows Swift
 
+## `skills/design-llm-tool/SKILL.md`
+
+A companion process skill that teaches AI coding assistants *how to design* a tool using the macros, as opposed to the reference skill which teaches *what the macros do*. Use when generating new tool code from a description or spec.
+
+### Required Content
+
+The SKILL.md must include:
+
+- YAML frontmatter with `name` (kebab-case) and `description` (third-person, describes its process-skill role and trigger context)
+- A sequential, numbered design process covering: deriving the tool name and doc comment from a description; mapping inputs to Swift types; deciding required vs optional per argument; selecting the appropriate `GuideConstraint` for constrained arguments (with explicit decision rules for each constraint type); choosing inline vs external `Arguments` struct (with a clear decision rule); identifying and ordering nested types; assembling the final code with a pre-flight checklist
+- Decision rules must be explicit — not just "here are the options" but "use X when Y"
+- A complete worked example demonstrating multiple types, at least one constraint, and a nested type
+- An explicit boundary section stating that DSL integration (ToolSession, Agent, request wiring) is out of scope and directing to the DSL package skills
+
+### Constraints
+
+- Must not reference DSL-specific APIs (`ToolSession`, `Agent`, `FunctionToolParam`, `AgentTool`) — those belong in the DSL package skills
+- Must not duplicate `using-swift-llm-tool-macros` content; the two skills are complementary, not overlapping
+- Scoped to macro code output only; stops at the annotated Swift struct definitions
+
 ### README Agent Skill Section
 
 The README's "Agent Skill" section must:

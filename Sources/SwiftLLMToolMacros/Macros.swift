@@ -29,9 +29,10 @@ public macro LLMToolArguments() = #externalMacro(
 
 /// Generates an OpenAI-compatible tool definition for the annotated struct.
 ///
-/// The struct must contain a nested `Arguments` type conforming to
-/// `LLMToolArguments` and a `call(arguments:)` method. The macro
-/// synthesizes `LLMTool` conformance and a
+/// The struct must contain either a `typealias Arguments` pointing to an
+/// `LLMToolArguments`-conforming type, or a nested `struct Arguments` that
+/// conforms to `LLMToolArguments`. A `func call(arguments:) async throws -> ToolOutput`
+/// method is also required. The macro synthesizes `LLMTool` conformance and a
 /// `static var toolDefinition: ToolDefinition`.
 ///
 /// ## Example

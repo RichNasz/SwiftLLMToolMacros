@@ -46,8 +46,10 @@ SwiftLLMToolMacros/
 ├── docs/
 │   └── SpecDrivenDevelopment.md          # SDD workflow guide (WHAT + HOW + Skill harmony)
 └── skills/
-    └── using-swift-llm-tool-macros/
-        └── SKILL.md                      # Agent Skill for AI coding assistants
+    ├── using-swift-llm-tool-macros/
+    │   └── SKILL.md                      # Reference skill: macro API and type mapping
+    └── design-llm-tool/
+        └── SKILL.md                      # Process skill: step-by-step tool design workflow
 ```
 
 ## Three-Target Architecture
